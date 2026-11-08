@@ -24,7 +24,7 @@ const VEN = ['Quảng Ninh','Hải Phòng','Thái Bình','Nam Định','Ninh Bì
 const NUI = ['Hà Giang','Cao Bằng','Bắc Kạn','Lạng Sơn','Tuyên Quang','Thái Nguyên','Phú Thọ','Bắc Giang','Lào Cai','Yên Bái','Lai Châu','Điện Biên','Sơn La','Hòa Bình'];
 const BTB = ['Thanh Hóa','Nghệ An','Hà Tĩnh','Quảng Bình','Quảng Trị','Thừa Thiên Huế'];
 const pts = P.map(([n,s,r,lat,lon]) => ({n,s,r,x:(lon-102)*110,y:(23.6-lat)*105, ox:(lon-102)*110, oy:(23.6-lat)*105, fixed: n==='Hoàng Sa'||n==='Trường Sa'}));
-const MIN = 64;
+const MIN = 76;
 for (let it=0; it<2000; it++) {
   for (let i=0;i<pts.length;i++) for (let j=i+1;j<pts.length;j++) {
     const a=pts[i], b=pts[j]; let dx=b.x-a.x, dy=b.y-a.y; let d=Math.hypot(dx,dy)||0.01;
