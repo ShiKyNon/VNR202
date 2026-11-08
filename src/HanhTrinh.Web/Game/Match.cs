@@ -8,7 +8,7 @@ public sealed class Match
     // shortcut: settable only so local e2e runs (HT_FAST=1 in Development) finish quickly
     public static TimeSpan Cooldown { get; set; } = TimeSpan.FromSeconds(5);
     public static readonly TimeSpan GraceAfterFirstFinish = TimeSpan.FromSeconds(90);
-    public static readonly TimeSpan HardCap = TimeSpan.FromMinutes(20);
+    public static readonly TimeSpan HardCap = TimeSpan.FromMinutes(40);
     public static readonly TimeSpan ChuQuanLimit = TimeSpan.FromSeconds(10);
     /// <summary>Bù thời gian hoạt ảnh xúc xắc/di chuyển bên client trước khi câu hỏi thực sự hiện.</summary>
     public static readonly TimeSpan AnimationGrace = TimeSpan.FromSeconds(10);

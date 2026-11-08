@@ -167,7 +167,7 @@ public class RoomTests
         var r = Playing();
         Match? ended = null;
         _rm.MatchEnded += (_, m) => ended = m;
-        _clock.Advance(TimeSpan.FromMinutes(20)); _rm.Tick();
+        _clock.Advance(Match.HardCap); _rm.Tick();
         Assert.NotNull(ended);
         Assert.Equal(RoomStatus.Lobby, r.Status);
         Assert.Equal(2, r.Seats.Count);

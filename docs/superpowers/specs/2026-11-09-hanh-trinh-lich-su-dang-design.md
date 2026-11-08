@@ -239,7 +239,7 @@ Tên mùa Hạ/Thu/Đông là đề xuất của Claude, người dùng không p
 ### 5.10 Kết thúc trận và xếp hạng
 - **1 người chơi**: về đích là kết thúc ngay.
 - **Nhiều người**: kết thúc khi **tất cả đã về đích**, hoặc **1:30 sau khi người đầu tiên về đích**, tùy cái nào đến trước.
-- **[Quyết định của Claude]** Người đã xác nhận rời trận không tính vào điều kiện "tất cả về đích". Giới hạn cứng 20 phút nếu chưa ai về đích.
+- **[Quyết định của Claude]** Người đã xác nhận rời trận không tính vào điều kiện "tất cả về đích". Giới hạn cứng 40 phút nếu chưa ai về đích (người dùng đổi từ 20 phút).
 - **Xếp hạng**: vị trí trên bản đồ trước (người về đích xếp trên, theo thời gian về đích), rồi đến % đúng. **[Quyết định của Claude]** Hòa nữa thì ai đến ô đó sớm hơn xếp trên. Người rời trận vẫn có trong bảng, ghi "đã rời".
 - % đúng = đúng / (đúng + sai). Câu lịch sử của tỉnh phát sáng **có** tính vào đúng/sai **[Quyết định của Claude]**; câu bỏ qua bằng Chớp thời cơ không tính.
 

@@ -149,10 +149,12 @@ public class MatchTests
     }
 
     [Fact]
-    public void HardCap20m_Ends()
+    public void HardCap40m_Ends()
     {
         var (m, c) = Plain(2);
-        c.Advance(TimeSpan.FromMinutes(20)); m.Tick();
+        c.Advance(TimeSpan.FromMinutes(40) - TimeSpan.FromSeconds(1)); m.Tick();
+        Assert.False(m.IsOver);
+        c.Advance(TimeSpan.FromSeconds(1)); m.Tick();
         Assert.True(m.IsOver);
     }
 
