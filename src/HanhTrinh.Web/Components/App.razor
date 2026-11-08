@@ -7,14 +7,19 @@
     <base href="/" />
     <title>Hành trình Lịch sử Đảng</title>
     <link rel="icon" href="icons/2B50.svg" />
-    <link rel="stylesheet" href="app.css" />
+    <link rel="stylesheet" href="app.css?v=@Ver" />
     <HeadOutlet @rendermode="InteractiveServer" />
 </head>
 
 <body>
     <Routes @rendermode="InteractiveServer" />
-    <script src="app.js"></script>
+    <script src="app.js?v=@Ver"></script>
     <script src="_framework/blazor.web.js"></script>
 </body>
 
 </html>
+
+@code {
+    // Đổi mỗi lần build → trình duyệt không dùng lại CSS/JS cũ trong bộ nhớ đệm sau khi deploy.
+    private static readonly string Ver = typeof(App).Assembly.ManifestModule.ModuleVersionId.ToString("N")[..8];
+}

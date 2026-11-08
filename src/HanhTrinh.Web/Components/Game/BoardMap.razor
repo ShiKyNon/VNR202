@@ -22,7 +22,16 @@
         @if (z.Deco is not null) { <g><text class="deco" x="@F(z.Dx)" y="@F(z.Dy)">@z.Deco</text></g> }
     }
 
+    @foreach (var r in Rivers)
+    {
+        <path class="river" d="@r.D" />
+        <g><text class="river-label" x="@F(r.Lx)" y="@F(r.Ly)">@r.Name</text></g>
+    }
     <polyline class="path" points="@PathPoints" />
+    @foreach (var t in Tiles.Where(t => Landmarks.ContainsKey(t.Name)))
+    {
+        <g><text class="landmark" x="@F(t.X + (t.Anchor == "end" ? 44 : -44))" y="@F(t.Y + 12)">@Landmarks[t.Name]</text></g>
+    }
     @foreach (var (a, b) in IslandLinks) { <line class="sea-link" x1="@F(a.X)" y1="@F(a.Y)" x2="@F(b.X)" y2="@F(b.Y)" /> }
 
     @foreach (var t in Tiles)
@@ -84,7 +93,7 @@
     private string SeasonCss => Game is null ? "" : SeasonCatalog.Get(Game.Season).Css;
     private static string F(double v) => v.ToString("0.#", System.Globalization.CultureInfo.InvariantCulture);
 
-    private double VbX => Tiles.Min(t => t.X) - 260;
+    private double VbX => Tiles.Min(t => t.X) - 330;
     private double VbY => Tiles.Min(t => t.Y) - 70;
     private double VbW => Tiles.Max(t => t.X) + 230 - VbX;
     private double VbH => Tiles.Max(t => t.Y) + 90 - VbY;
@@ -98,6 +107,39 @@
     private IEnumerable<(Tile, Tile)> IslandLinks => Tiles.Where(t => t.Tags.HasFlag(TileTags.Dao))
         .SelectMany(t => new[] { (Tiles[t.Index - 2], t), (t, Tiles[t.Index]) });
 
+    // Địa danh tiêu biểu (chỉ để trang trí).
+    private static readonly Dictionary<string, string> Landmarks = new()
+    {
+        ["Hà Giang"] = "🚩", ["Lào Cai"] = "🏔️", ["Điện Biên"] = "🎖️", ["Cao Bằng"] = "🏞️", ["Tuyên Quang"] = "🌳",
+        ["Quảng Ninh"] = "⛵", ["Hà Nội"] = "🏛️", ["Ninh Bình"] = "🛶", ["Nghệ An"] = "🪷", ["Quảng Bình"] = "🦇",
+        ["Thừa Thiên Huế"] = "🏯", ["Đà Nẵng"] = "🌉", ["Quảng Nam"] = "🏮", ["Khánh Hòa"] = "🐠", ["Lâm Đồng"] = "🌸",
+        ["Gia Lai"] = "🐘", ["TP. Hồ Chí Minh"] = "🏙️", ["Kiên Giang"] = "🏝️", ["Bến Tre"] = "🥥", ["Cần Thơ"] = "⛴️", ["Cà Mau"] = "🌿",
+    };
+
+    private record RiverVm(string Name, string D, double Lx, double Ly);
+    private List<RiverVm>? _rivers;
+    private IEnumerable<RiverVm> Rivers => _rivers ??=
+    [
+        River("S. Hồng", ["Lào Cai", "Yên Bái", "Phú Thọ", "Hà Nội", "Hưng Yên", "Thái Bình"], 60),
+        River("S. Mê Kông", ["An Giang", "Đồng Tháp", "Vĩnh Long", "Bến Tre"], 70),
+    ];
+
+    private RiverVm River(string name, string[] via, double tail)
+    {
+        var pts = via.Select(n => Tiles.First(t => t.Name == n)).Select(t => (X: t.X + 14, Y: t.Y + 22)).ToList();
+        var last = pts[^1]; var prev = pts[^2];
+        var len = Math.Max(1, Math.Sqrt(Math.Pow(last.X - prev.X, 2) + Math.Pow(last.Y - prev.Y, 2)));
+        pts.Add((last.X + (last.X - prev.X) / len * tail, last.Y + (last.Y - prev.Y) / len * tail));
+        var d = "M" + F(pts[0].X) + "," + F(pts[0].Y);
+        for (var i = 1; i < pts.Count; i++)
+        {
+            var (ax, ay) = pts[i - 1]; var (bx, by) = pts[i];
+            d += " Q" + F(ax + (bx - ax) / 2 + (by - ay) * .15) + "," + F(ay + (by - ay) / 2 - (bx - ax) * .15) + " " + F(bx) + "," + F(by);
+        }
+        var mid = pts[pts.Count / 2];
+        return new RiverVm(name, d, mid.X + 18, mid.Y + 34);
+    }
+
     private record ZoneVm(string Points, string Color, string Ink, string Label, double Lx, double Ly, string Anchor, string? Deco, double Dx, double Dy);
 
     // Màu, tên, vị trí nhãn từng vùng (lệch ra phía ngoài dải đất).
@@ -109,10 +151,11 @@
         ["BacTrungBo"] = ("#f7c99b", "#9a4f12", "BẮC TRUNG BỘ", -110, 0, "end", "🏯"),
         ["NamTrungBo"] = ("#9fd8d0", "#1f6e66", "NAM TRUNG BỘ", 150, 30, "start", "🏖️"),
         ["TayNguyen"] = ("#d9b38c", "#6e4520", "TÂY NGUYÊN", -150, 0, "end", "☕"),
-        ["DongNamBo"] = ("#f4a9a0", "#8f2a1f", "ĐÔNG NAM BỘ", 170, -40, "start", "🏙️"),
-        ["TayNamBo"] = ("#b9e4a6", "#2f6d1f", "ĐB SÔNG CỬU LONG", -230, 60, "end", "🛶"),
+        ["DongNamBo"] = ("#f4a9a0", "#8f2a1f", "ĐÔNG NAM BỘ", 40, 110, "start", "🏙️"),
+        ["TayNamBo"] = ("#b9e4a6", "#2f6d1f", "ĐB SÔNG CỬU LONG", -50, -30, "end", "🛶"),
     };
 
+    private static readonly Dictionary<string, string> LabelRef = new() { ["DongNamBo"] = "Bà Rịa – Vũng Tàu", ["TayNamBo"] = "Cà Mau" };
     private List<ZoneVm>? _zones;
     private IEnumerable<ZoneVm> Zones => _zones ??= BuildZones();
 
@@ -124,6 +167,8 @@
             var ts = Tiles.Where(t => t.Zone == zone).ToList();
             if (ts.Count == 0) continue;
             var cx = ts.Average(t => t.X); var cy = ts.Average(t => t.Y);
+            // Hai vùng phía Nam quá dày: neo nhãn vào một tỉnh ở rìa, đặt ra ngoài biển.
+            if (LabelRef.TryGetValue(zone, out var refName)) { var rt = Tiles.First(t => t.Name == refName); cx = rt.X; cy = rt.Y; }
             var pts = string.Join(" ", ts.Select(t => $"{F(t.X)},{F(t.Y)}"));
             res.Add(new ZoneVm(pts, s.Color, s.Ink, s.Label, cx + s.Ox, cy + s.Oy, s.Anchor, s.Deco, cx + s.Ox * 0.55, cy + s.Oy + 60));
         }

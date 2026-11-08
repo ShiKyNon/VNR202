@@ -316,3 +316,6 @@ li.chosen { border-color: var(--bad); background: #fdecec; text-decoration: line
     .hero h1 { font-size: 2.4rem; } .hero h1 span { font-size: 3rem; }
 }
 h1:focus, h1:focus-visible { outline: none; }
+.board .river { fill: none; stroke: #4aa3df; stroke-width: 9; stroke-linecap: round; opacity: .85; }
+.board .river-label { font-size: 18px; font-style: italic; font-weight: 700; fill: #1d6fb8; paint-order: stroke; stroke: rgba(255,255,255,.8); stroke-width: 4px; }
+.board .landmark { font-size: 30px; text-anchor: middle; }

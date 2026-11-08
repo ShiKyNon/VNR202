@@ -26,6 +26,9 @@ const ZONES = {TayBac:['Lai Châu','Điện Biên','Sơn La','Hòa Bình','Lào 
 const BTB = ['Thanh Hóa','Nghệ An','Hà Tĩnh','Quảng Bình','Quảng Trị','Thừa Thiên Huế'];
 const pts = P.map(([n,s,r,lat,lon]) => ({n,s,r,x:(lon-102)*110,y:(23.6-lat)*105, ox:(lon-102)*110, oy:(23.6-lat)*105, fixed: n==='Hoàng Sa'||n==='Trường Sa'}));
 const MIN = 76;
+// Nam Bộ dày đặc: phóng to quanh TP.HCM (giữ đúng vị trí tương đối) rồi mới đẩy giãn.
+const hcm = pts.find(p => p.n === 'TP. Hồ Chí Minh'), SCALE = 1.55;
+for (const p of pts) if (p.r === 'Nam') { p.x = p.ox = hcm.ox + (p.ox - hcm.ox) * SCALE; p.y = p.oy = hcm.oy + (p.oy - hcm.oy) * SCALE; }
 for (let it=0; it<2000; it++) {
   for (let i=0;i<pts.length;i++) for (let j=i+1;j<pts.length;j++) {
     const a=pts[i], b=pts[j]; let dx=b.x-a.x, dy=b.y-a.y; let d=Math.hypot(dx,dy)||0.01;
