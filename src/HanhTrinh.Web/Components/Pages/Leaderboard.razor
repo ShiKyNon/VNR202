@@ -1,7 +1,82 @@
 @page "/xep-hang"
+@inject MatchArchive Archive
 
 <div class="page"><div class="card wide">
     <BackButton Href="/" />
     <h2>🏆 Xếp hạng</h2>
-    <p class="muted">Đang cập nhật…</p>
+    <div class="tabs">
+        <button class="btn @(_tab == 0 ? "primary" : "")" @onclick="() => _tab = 0">Kỷ lục</button>
+        <button class="btn @(_tab == 1 ? "primary" : "")" @onclick="() => _tab = 1">Lịch sử trận</button>
+    </div>
+
+    @if (_error is not null) { <p class="error">@_error</p> }
+    else if (_tab == 0)
+    {
+        <div class="records">
+            <section>
+                <h3>⚡ Về đích nhanh nhất</h3>
+                <RecordTable Rows="_fast" Value="@(r => RoomVmBuilder.Clock(TimeSpan.FromMilliseconds(r.FinishTimeMs ?? 0)))" />
+            </section>
+            <section>
+                <h3>🎯 Tỉ lệ đúng cao nhất <span class="muted tiny">(chỉ tính người đã về đích)</span></h3>
+                <RecordTable Rows="_best" Value="@(r => $"{r.Percent:0.#}% ({r.Correct}/{r.Correct + r.Wrong})")" />
+            </section>
+        </div>
+    }
+    else
+    {
+        @if (_history.Count == 0) { <p class="muted">Chưa có trận nào.</p> }
+        <div class="table-wrap">
+            <table class="ranktable">
+                <thead><tr><th>Mã phòng</th><th>Thời gian</th><th>Mùa</th><th>Số người</th><th></th></tr></thead>
+                <tbody>
+                    @foreach (var m in _history)
+                    {
+                        <tr>
+                            <td>@m.RoomCode</td>
+                            <td>@Vn(m.StartedAt)</td>
+                            <td>@m.Season</td>
+                            <td>@m.PlayerCount</td>
+                            <td><a class="btn small" href="/xep-hang/@m.Id">Xem kết quả</a></td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+        @if (_total > PageSize)
+        {
+            <div class="row gap center-row">
+                <button class="btn small" disabled="@(_page <= 1)" @onclick="() => Load(_page - 1)">‹ Trước</button>
+                <span>Trang @_page / @(((_total - 1) / PageSize) + 1)</span>
+                <button class="btn small" disabled="@(_page * PageSize >= _total)" @onclick="() => Load(_page + 1)">Sau ›</button>
+            </div>
+        }
+    }
 </div></div>
+
+@code {
+    private const int PageSize = 20;
+    private int _tab, _page = 1, _total;
+    private IReadOnlyList<HanhTrinh.Web.Persistence.MatchResultRecord> _fast = [], _best = [];
+    private IReadOnlyList<HanhTrinh.Web.Persistence.MatchRecord> _history = [];
+    private string? _error;
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            _fast = await Archive.FastestAsync();
+            _best = await Archive.BestPercentAsync();
+            await Load(1);
+        }
+        catch (Exception) { _error = "Không tải được dữ liệu xếp hạng, thử lại sau nhé."; }
+    }
+
+    private async Task Load(int page)
+    {
+        _page = page;
+        (_history, _total) = await Archive.HistoryAsync(page, PageSize);
+    }
+
+    public static string Vn(DateTime utc) => DateTime.SpecifyKind(utc, DateTimeKind.Utc).AddHours(7).ToString("HH:mm dd/MM/yyyy");
+}

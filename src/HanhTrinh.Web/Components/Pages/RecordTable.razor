@@ -1,0 +1,25 @@
+@if (Rows.Count == 0)
+{
+    <p class="muted">Chưa có ai.</p>
+}
+else
+{
+    <table class="ranktable">
+        <tbody>
+            @foreach (var (r, i) in Rows.Select((r, i) => (r, i)))
+            {
+                <tr>
+                    <td>@(i switch { 0 => "🥇", 1 => "🥈", 2 => "🥉", _ => (i + 1).ToString() })</td>
+                    <td><img src="icons/@(r.IconId).svg" alt="" /></td>
+                    <td>@r.Name</td>
+                    <td><b>@Value(r)</b></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    [Parameter, EditorRequired] public IReadOnlyList<HanhTrinh.Web.Persistence.MatchResultRecord> Rows { get; set; } = [];
+    [Parameter, EditorRequired] public Func<HanhTrinh.Web.Persistence.MatchResultRecord, string> Value { get; set; } = _ => "";
+}

@@ -1,0 +1,26 @@
+@page "/xep-hang/{Id:int}"
+@inject MatchArchive Archive
+
+<div class="page"><div class="card wide">
+    <BackButton Href="/xep-hang" />
+    @if (_loading) { <p class="muted">Đang tải…</p> }
+    else if (_m is null) { <p class="error">Không tìm thấy trận này.</p> }
+    else
+    {
+        <h2>Kết quả trận · phòng @_m.RoomCode</h2>
+        <p class="muted">@Leaderboard.Vn(_m.StartedAt) · Mùa: @_m.Season · @_m.PlayerCount người · Thời gian trận: @RoomVmBuilder.Clock(_m.EndedAt - _m.StartedAt)</p>
+        <RankTable Rows="_m.Results.Select(r => r.ToRow()).ToList()" />
+    }
+</div></div>
+
+@code {
+    [Parameter] public int Id { get; set; }
+    private HanhTrinh.Web.Persistence.MatchRecord? _m;
+    private bool _loading = true;
+
+    protected override async Task OnParametersSetAsync()
+    {
+        try { _m = await Archive.GetAsync(Id); } catch { _m = null; }
+        _loading = false;
+    }
+}

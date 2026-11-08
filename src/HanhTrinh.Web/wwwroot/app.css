@@ -207,3 +207,5 @@ li.chosen { border-color: var(--bad); background: #fdecec; text-decoration: line
     .map-area { height: 85vh; }
     .options { grid-template-columns: 1fr; }
 }
+.records { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+@media (max-width: 900px) { .records { grid-template-columns: 1fr; } }
