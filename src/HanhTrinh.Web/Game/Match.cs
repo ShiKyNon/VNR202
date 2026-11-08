@@ -11,7 +11,7 @@ public sealed class Match
     public static readonly TimeSpan HardCap = TimeSpan.FromMinutes(40);
     public static readonly TimeSpan ChuQuanLimit = TimeSpan.FromSeconds(10);
     /// <summary>Bù thời gian hoạt ảnh xúc xắc/di chuyển bên client trước khi câu hỏi thực sự hiện.</summary>
-    public static readonly TimeSpan AnimationGrace = TimeSpan.FromSeconds(10);
+    public static readonly TimeSpan AnimationGrace = TimeSpan.FromSeconds(12);
     public const int FinishTile = 65;
     public const int BagMax = 3;
     public const int MarksPerKind = 7;

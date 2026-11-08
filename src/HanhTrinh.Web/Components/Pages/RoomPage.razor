@@ -113,8 +113,9 @@ else if (_vm.Game is { } g)
 
                 @if (_anim is Anim.Rolling or Anim.Showing)
                 {
+                    <div class="dice-backdrop"></div>
                     <div class="popup dice-pop">
-                        <div class="cube-wrap">
+                        <div class="cube-wrap @(_anim == Anim.Rolling ? "tossing" : "landed")">
                             <div class="cube @(_anim == Anim.Rolling ? "rolling" : $"show-{_roll?.Raw}")">
                                 @for (var f = 1; f <= 6; f++)
                                 {
@@ -122,6 +123,7 @@ else if (_vm.Game is { } g)
                                 }
                             </div>
                         </div>
+                        <div class="dice-shadow @(_anim == Anim.Rolling ? "tossing" : "")"></div>
                         @if (_anim == Anim.Showing && _roll is not null)
                         {
                             <div class="formula">@(_roll.Formula.Contains('=') ? _roll.Formula : $"{_roll.Raw}") <span class="steps">→ đi @_roll.Steps bước</span></div>
@@ -217,7 +219,7 @@ else if (_vm.Game is { } g)
     private enum Anim { None, Rolling, Showing, Moving, Arrived }
 
     // Nhịp hoạt ảnh (ms). Server cộng bù tương ứng cho debuff 10 giây (Match.AnimationGrace).
-    private const int RollMs = 1800, ShowMs = 1600, StepMs = 520, ArriveMs = 800;
+    private const int RollMs = 2400, ShowMs = 1600, StepMs = 520, ArriveMs = 800;
     private static readonly int[][] Pips = [[], [5], [1, 9], [1, 5, 9], [1, 3, 7, 9], [1, 3, 5, 7, 9], [1, 3, 4, 6, 7, 9]];
     private bool _zoomed = true;
     private string? _hiddenQid;

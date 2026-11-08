@@ -319,3 +319,38 @@ h1:focus, h1:focus-visible { outline: none; }
 .board .river { fill: none; stroke: #4aa3df; stroke-width: 9; stroke-linecap: round; opacity: .85; }
 .board .river-label { font-size: 18px; font-style: italic; font-weight: 700; fill: #1d6fb8; paint-order: stroke; stroke: rgba(255,255,255,.8); stroke-width: 4px; }
 .board .landmark { font-size: 30px; text-anchor: middle; }
+
+/* Tung xúc xắc: rơi từ trên xuống, nảy, xoay */
+.dice-backdrop { position: absolute; inset: 0; background: rgba(40, 0, 8, .45); z-index: 9; animation: fade-in .2s ease-out; }
+@keyframes fade-in { from { opacity: 0; } }
+.dice-pop { min-width: 420px; padding: 26px 30px 22px; border-width: 5px; z-index: 10; }
+.dice-pop .cube-wrap { width: 160px; height: 160px; margin: 10px auto 6px; }
+.dice-pop .face { border-radius: 24px; padding: 18px; }
+.dice-pop .face span.pip { width: 28px; height: 28px; }
+.dice-pop .face.f1 span.pip { width: 40px; height: 40px; }
+.dice-pop .f1 { transform: rotateY(0deg) translateZ(80px); }
+.dice-pop .f2 { transform: rotateY(90deg) translateZ(80px); }
+.dice-pop .f3 { transform: rotateX(90deg) translateZ(80px); }
+.dice-pop .f4 { transform: rotateX(-90deg) translateZ(80px); }
+.dice-pop .f5 { transform: rotateY(-90deg) translateZ(80px); }
+.dice-pop .f6 { transform: rotateY(180deg) translateZ(80px); }
+.cube-wrap.tossing { animation: toss 2.4s cubic-bezier(.3, .6, .4, 1) forwards; }
+@keyframes toss {
+    0% { transform: translateY(-260px) scale(.5); }
+    30% { transform: translateY(0) scale(1); }
+    42% { transform: translateY(-90px) scale(1.05); }
+    56% { transform: translateY(0) scale(1); }
+    66% { transform: translateY(-36px); }
+    76% { transform: translateY(0); }
+    84% { transform: translateY(-12px); }
+    100% { transform: translateY(0); }
+}
+.cube-wrap.landed { animation: land .4s ease-out; }
+@keyframes land { 50% { transform: scale(1.12); } }
+.cube.rolling { animation: tumble .55s linear infinite; }
+.dice-shadow { width: 130px; height: 18px; margin: 0 auto 14px; border-radius: 50%; background: radial-gradient(rgba(0, 0, 0, .35), transparent 70%); }
+.dice-shadow.tossing { animation: shadow 2.4s cubic-bezier(.3, .6, .4, 1) forwards; }
+@keyframes shadow {
+    0% { transform: scale(.3); opacity: .2; } 30% { transform: scale(1); opacity: 1; } 42% { transform: scale(.6); opacity: .5; }
+    56% { transform: scale(1); opacity: 1; } 66% { transform: scale(.8); } 76%, 100% { transform: scale(1); opacity: 1; }
+}
