@@ -1,0 +1,37 @@
+<div class="results">
+    <h2>🏁 Kết quả trận đấu</h2>
+    <p class="muted">@SeasonCatalog.Get(Game.Season).Emoji Mùa: @SeasonCatalog.Get(Game.Season).Title · Thời gian trận: @RoomVmBuilder.Clock(Game.Elapsed)</p>
+    <RankTable Rows="Game.Ranking" MyToken="@MyToken" />
+
+    <h3>📖 Xem lại các câu bạn đã gặp (@History.Count)</h3>
+    <div class="review">
+        @foreach (var (h, i) in History.Select((h, i) => (h, i)))
+        {
+            <details class="rv @(h.Chosen == h.Answer ? "ok" : "bad")">
+                <summary>
+                    <span>@(h.Chosen == h.Answer ? "✔" : h.Chosen < 0 ? "⏭" : "✘")</span>
+                    @(i + 1). @(h.Bonus ? "✨ " : "")@h.Text
+                </summary>
+                <ul>
+                    @for (var o = 0; o < h.Options.Length; o++)
+                    {
+                        <li class="@(o == h.Answer ? "correct" : o == h.Chosen ? "chosen" : "")">@h.Options[o]</li>
+                    }
+                </ul>
+                <p class="expl">💡 @h.Explanation <i>(Giáo trình, tr.@h.Page)</i></p>
+            </details>
+        }
+    </div>
+    <div class="row gap center-row">
+        <button class="btn big primary" @onclick="OnAgain">🔁 Chơi lại</button>
+        <button class="btn big" @onclick="OnMenu">🏠 Về Menu</button>
+    </div>
+</div>
+
+@code {
+    [Parameter, EditorRequired] public GameVm Game { get; set; } = default!;
+    [Parameter] public IReadOnlyList<SeenEntry> History { get; set; } = [];
+    [Parameter] public string? MyToken { get; set; }
+    [Parameter] public EventCallback OnAgain { get; set; }
+    [Parameter] public EventCallback OnMenu { get; set; }
+}

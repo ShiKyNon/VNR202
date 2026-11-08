@@ -1,0 +1,15 @@
+@inject NavigationManager Nav
+
+<button class="btn back" @onclick="Go">← Quay lại</button>
+
+@code {
+    [Parameter] public string Href { get; set; } = "/";
+    /// <summary>Nếu có, gọi thay cho điều hướng mặc định.</summary>
+    [Parameter] public EventCallback OnClick { get; set; }
+
+    private async Task Go()
+    {
+        if (OnClick.HasDelegate) await OnClick.InvokeAsync();
+        else Nav.NavigateTo(Href);
+    }
+}

@@ -1,0 +1,85 @@
+@inject RoomManager Rooms
+
+<svg class="board @SeasonCss" viewBox="@ViewBox" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Bản đồ Việt Nam 65 ô">
+    <defs>
+        <radialGradient id="glow"><stop offset="0%" stop-color="#ffe066" stop-opacity="0.95" /><stop offset="100%" stop-color="#ffe066" stop-opacity="0" /></radialGradient>
+    </defs>
+    @* dải đất chữ S *@
+    <polyline class="land" points="@LandPoints" />
+    <polyline class="path" points="@PathPoints" />
+    @foreach (var (a, b) in IslandLinks)
+    {
+        <line class="sea-link" x1="@a.X" y1="@a.Y" x2="@b.X" y2="@b.Y" />
+    }
+    @foreach (var t in Tiles)
+    {
+        var mark = Game?.Marks.GetValueOrDefault(t.Index) ?? TileMark.None;
+        var glow = Game?.Glowing.Contains(t.Index) ?? false;
+        var island = t.Tags.HasFlag(TileTags.Dao);
+        <g class="tile @(island ? "island" : "") @(mark == TileMark.Buff ? "buff" : mark == TileMark.Debuff ? "debuff" : "") @(t.Index == 1 || t.Index == 65 ? "endpoint" : "")">
+            @if (glow) { <circle class="glow" cx="@t.X" cy="@t.Y" r="46" fill="url(#glow)" /> }
+            @if (island)
+            {
+                <circle class="islet" cx="@(t.X - 26)" cy="@(t.Y - 18)" r="5" />
+                <circle class="islet" cx="@(t.X + 24)" cy="@(t.Y + 20)" r="4" />
+                <circle class="islet" cx="@(t.X + 28)" cy="@(t.Y - 22)" r="3" />
+            }
+            <circle class="dot" cx="@t.X" cy="@t.Y" r="@(island ? 24 : 20)" />
+            <text class="num" x="@t.X" y="@(t.Y + 5)">@(island ? "❓" : mark == TileMark.Buff ? "🟢" : mark == TileMark.Debuff ? "🔴" : glow ? "✨" : t.Index.ToString())</text>
+            <text class="label" x="@(t.X + (LabelLeft(t) ? -24 : 24))" y="@(t.Y + 5)" text-anchor="@(LabelLeft(t) ? "end" : "start")">@(island ? $"Quần đảo {t.Name}" : t.Short)</text>
+        </g>
+    }
+    @if (Game is not null)
+    {
+        @foreach (var grp in Game.Pieces.Where(p => !p.Left).GroupBy(p => PieceTile(p)))
+        {
+            var t = Tiles[grp.Key - 1];
+            var list = grp.OrderBy(p => p.Token == MyToken ? 1 : 0).ToList();
+            for (var i = 0; i < list.Count; i++)
+            {
+                var p = list[i];
+                var (dx, dy) = Offset(i, list.Count);
+                var mine = p.Token == MyToken;
+                <g class="piece @(mine ? "mine" : "")" style="transform: translate(@(F(t.X + dx))px, @(F(t.Y + dy))px)">
+                    @if (mine) { <circle r="23" class="me-ring" /> }
+                    <image href="icons/@(p.IconId).svg" x="-18" y="-18" width="36" height="36"><title>@p.Name</title></image>
+                </g>
+            }
+        }
+    }
+    <text class="map-note" x="@F(Tiles.Min(t => t.X) - 130)" y="@F(Tiles.Max(t => t.Y) + 40)">63 tỉnh thành theo địa giới hành chính trước 7/2025</text>
+</svg>
+
+@code {
+    [Parameter] public GameVm? Game { get; set; }
+    [Parameter] public string? MyToken { get; set; }
+    /// <summary>Ô hiển thị tạm cho quân của mình trong lúc chạy hoạt ảnh.</summary>
+    [Parameter] public int? MyAnimTile { get; set; }
+
+    private IReadOnlyList<Tile> Tiles => Rooms.Content.Tiles;
+    private string ViewBox => $"{F(Tiles.Min(t => t.X) - 150)} {F(Tiles.Min(t => t.Y) - 60)} {F(Tiles.Max(t => t.X) - Tiles.Min(t => t.X) + 330)} {F(Tiles.Max(t => t.Y) - Tiles.Min(t => t.Y) + 110)}";
+    private string SeasonCss => Game is null ? "" : SeasonCatalog.Get(Game.Season).Css;
+
+    private static string F(double v) => v.ToString(System.Globalization.CultureInfo.InvariantCulture);
+
+    private string LandPoints => string.Join(" ", Tiles.Where(t => !t.Tags.HasFlag(TileTags.Dao)).Select(t => $"{F(t.X)},{F(t.Y)}"));
+    private string PathPoints => LandPoints;
+
+    private IEnumerable<(Tile, Tile)> IslandLinks => Tiles.Where(t => t.Tags.HasFlag(TileTags.Dao))
+        .SelectMany(t => new[] { (Tiles[t.Index - 2], t), (t, Tiles[t.Index]) });
+
+    private static bool LabelLeft(Tile t) => t.Region == Region.Bac && t.X < 500 || t.Region == Region.Nam && t.X < 420;
+
+    private int PieceTile(PieceVm p) => p.Token == MyToken && MyAnimTile is { } a ? a : p.Tile;
+
+    private static (double, double) Offset(int i, int n)
+    {
+        if (n == 1) return (0, -2);
+        var ring = i < 6 ? 0 : 1 + (i - 6) / 12;
+        var slots = ring == 0 ? Math.Min(n, 6) : 12;
+        var k = ring == 0 ? i : (i - 6) % 12;
+        var r = ring == 0 ? 16 : 16 + ring * 14;
+        var a = 2 * Math.PI * k / slots - Math.PI / 2;
+        return (r * Math.Cos(a), r * Math.Sin(a));
+    }
+}

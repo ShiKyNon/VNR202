@@ -1,0 +1,69 @@
+@page "/luat-choi"
+
+<div class="page"><div class="card wide rules">
+    <BackButton Href="/" />
+    <h2>📜 Luật chơi</h2>
+
+    <h3>Hình thức</h3>
+    <ul>
+        <li>Mỗi phòng 1–60 người. Chủ phòng tạo phòng (mã 6 số), mọi người vào bằng mã hoặc chọn trong danh sách. Phòng khóa chỉ vào được bằng mã.</li>
+        <li>Bản đồ gồm 65 ô: 63 tỉnh thành (theo địa giới hành chính trước 7/2025) cùng 2 quần đảo <b>Hoàng Sa</b> (sau Đà Nẵng) và <b>Trường Sa</b> (sau Khánh Hòa). Xuất phát ở <b>Hà Giang</b>, đích là <b>Cà Mau</b>.</li>
+        <li>Mỗi người tự chơi theo nhịp riêng, không phải chờ lượt.</li>
+    </ul>
+
+    <h3>Lượt chơi</h3>
+    <ul>
+        <li>Đứng ở ô nào thì trả lời một câu hỏi trắc nghiệm (4 đáp án).</li>
+        <li><b>Đúng</b> → gieo xúc xắc (1–6) và tiến từng ấy ô, đến ô mới lại trả lời câu mới.</li>
+        <li><b>Sai</b> → chờ 5 giây; trong lúc chờ xem đáp án đúng, giải thích và số trang giáo trình. Sau đó trả lời câu khác ở cùng ô.</li>
+        <li>Mỗi người không gặp lại câu hỏi đã gặp.</li>
+    </ul>
+
+    <h3>Ô đặc biệt</h3>
+    <ul>
+        <li>🟢 <b>7 ô buff</b> và 🔴 <b>7 ô debuff</b> được rải ngẫu nhiên mỗi trận, hiện sẵn trên bản đồ. Dừng đúng ô mới bị/được, đi ngang qua thì không.</li>
+        <li>❓ <b>Hoàng Sa, Trường Sa</b>: bốc ngẫu nhiên một buff hoặc một debuff.</li>
+        <li>✨ <b>Tỉnh phát sáng</b>: tỉnh có sự kiện lịch sử diễn ra đúng mùa của trận. Trả lời đúng câu thường sẽ được thêm 1 câu lịch sử; đúng → nhận 2 buff, sai → không mất gì, đi tiếp.</li>
+        <li>Hiệu ứng làm di chuyển (lùi, tiến thêm, nhảy ô) không kích hoạt ô mới.</li>
+    </ul>
+
+    <h3>Buff và debuff</h3>
+    <table class="ranktable">
+        <thead><tr><th>Tên</th><th>Loại</th><th>Hiệu ứng</th></tr></thead>
+        <tbody>
+            @foreach (var e in EffectCatalog.All)
+            {
+                <tr><td>@e.Icon @e.Name</td><td>@(e.IsBagItem ? "Buff câu hỏi (vào túi)" : e.IsBuff ? "Buff" : "Debuff")</td><td>@e.Description</td></tr>
+            }
+        </tbody>
+    </table>
+    <p>Buff câu hỏi được cất vào túi (tối đa 3) và bạn tự bấm dùng ngay trong bảng câu hỏi.</p>
+
+    <h3>Mùa</h3>
+    <p>Mỗi trận bốc ngẫu nhiên một mùa, thông báo trong 5 giây đếm ngược và ghim ở cột phải suốt trận.</p>
+    @foreach (var s in Enum.GetValues<Season>().Select(SeasonCatalog.Get))
+    {
+        <div class="box season @s.Css">
+            <h4>@s.Emoji @s.Title</h4>
+            @foreach (var p in s.Pros) { <div class="pro">＋ @p</div> }
+            @foreach (var c in s.Cons) { <div class="con">－ @c</div> }
+        </div>
+    }
+    <p class="muted">Số bước = số gieo → nhân đôi (Thần tốc) → giới hạn trên → cộng/trừ theo mùa; luôn đi ít nhất 1 ô.</p>
+
+    <h3>Kết thúc và xếp hạng</h3>
+    <ul>
+        <li>Chơi một mình: về đích là kết thúc.</li>
+        <li>Nhiều người: kết thúc khi tất cả đã về đích, hoặc 1 phút 30 giây sau khi người đầu tiên về đích (tối đa 20 phút).</li>
+        <li>Xếp hạng theo vị trí trên bản đồ (người về đích xếp theo thời gian), sau đó theo tỉ lệ % trả lời đúng.</li>
+        <li>Trang Xếp hạng lưu top 5 về đích nhanh nhất, top 5 tỉ lệ đúng cao nhất (chỉ tính người đã về đích) và lịch sử các trận.</li>
+        <li>Rớt mạng: mở lại trang là vào lại đúng trận. Bấm "Quay lại" trong trận sẽ hỏi xác nhận; đã rời thì không vào lại được.</li>
+    </ul>
+
+    <h3>Nguồn</h3>
+    <ul>
+        <li>Câu hỏi soạn theo <i>Giáo trình Lịch sử Đảng Cộng sản Việt Nam</i> (dành cho bậc đại học hệ không chuyên lý luận chính trị), NXB Chính trị quốc gia Sự thật, 2021. Mỗi câu ghi số trang.</li>
+        <li>Biểu tượng: <a href="https://openmoji.org" target="_blank" rel="noopener">OpenMoji</a> — giấy phép CC BY-SA 4.0.</li>
+        <li>Bản đồ cách điệu tự vẽ: 63 tỉnh thành theo địa giới hành chính trước 7/2025, gồm quần đảo Hoàng Sa và Trường Sa của Việt Nam.</li>
+    </ul>
+</div></div>

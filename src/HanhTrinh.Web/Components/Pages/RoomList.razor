@@ -1,0 +1,109 @@
+@page "/phong"
+@implements IDisposable
+@inject PlayerSession Session
+@inject RoomManager Rooms
+@inject NavigationManager Nav
+
+<div class="page">
+    <div class="card wide">
+        <div class="row between">
+            <BackButton Href="/choi" />
+            <span class="muted">Xin chào, <b>@Session.Name</b></span>
+        </div>
+        <h2>Chọn phòng</h2>
+
+        @if (_current is not null)
+        {
+            <div class="notice">Bạn đang ở trong một phòng. <button class="btn primary" @onclick="() => Nav.NavigateTo(_current)">Vào lại phòng</button></div>
+        }
+
+        <div class="row gap">
+            <button class="btn big primary" @onclick="Create" disabled="@(!_ready)">＋ Tạo phòng</button>
+            <form class="row gap" @onsubmit="JoinCode" @onsubmit:preventDefault>
+                <input class="input code" inputmode="numeric" maxlength="6" placeholder="Mã phòng 6 số" @bind="_code" @bind:event="oninput" />
+                <button class="btn big" type="submit" disabled="@(!_ready)">Vào phòng</button>
+            </form>
+        </div>
+        @if (_error is not null) { <p class="error">@_error</p> }
+
+        <h3>Phòng đang mở</h3>
+        @if (_list.Count == 0) { <p class="muted">Chưa có phòng nào. Hãy tạo phòng mới!</p> }
+        <div class="room-list">
+            @foreach (var r in _list)
+            {
+                var disabled = r.Locked || r.Status != RoomStatus.Lobby || r.Count >= Room.MaxSeats;
+                <button class="room-item" disabled="@(disabled || !_ready)" @onclick="() => JoinList(r.HostToken)">
+                    <span class="room-name">@(r.Locked ? "🔒 " : "")Phòng của @r.HostName</span>
+                    <span class="room-meta">
+                        @if (r.Status != RoomStatus.Lobby) { <span class="tag">Đang chơi</span> }
+                        👥 @r.Count/@Room.MaxSeats
+                    </span>
+                </button>
+            }
+        </div>
+    </div>
+</div>
+
+@code {
+    private List<RoomListing> _list = [];
+    private string _code = "";
+    private string? _error;
+    private string? _current;
+    private bool _ready;
+
+    protected override void OnInitialized()
+    {
+        _list = Rooms.List().ToList();
+        Rooms.ListChanged += OnListChanged;
+    }
+
+    protected override async Task OnAfterRenderAsync(bool first)
+    {
+        if (!first) return;
+        var token = await Session.EnsureAsync();
+        if (string.IsNullOrEmpty(Session.Name)) { Nav.NavigateTo("/choi"); return; }
+        if (Rooms.FindByToken(token) is { } room) _current = $"/phong/{room.Code}";
+        if (new Uri(Nav.Uri).Query.Contains("kicked")) _error = "Bạn đã bị chủ phòng mời ra khỏi phòng.";
+        _ready = true;
+        StateHasChanged();
+    }
+
+    private void OnListChanged() => InvokeAsync(() => { _list = Rooms.List().ToList(); StateHasChanged(); });
+
+    private void Create()
+    {
+        var (res, room) = Rooms.Create(Session.Token!, Session.Name!);
+        if (room is null) { _error = Message(res); return; }
+        Nav.NavigateTo($"/phong/{room.Code}");
+    }
+
+    private void JoinCode()
+    {
+        var code = _code.Trim();
+        if (code.Length != 6 || !code.All(char.IsDigit)) { _error = "Mã phòng gồm 6 chữ số."; return; }
+        var (res, room) = Rooms.JoinByCode(code, Session.Token!, Session.Name!);
+        if (room is null) { _error = Message(res); return; }
+        Nav.NavigateTo($"/phong/{room.Code}");
+    }
+
+    private void JoinList(string hostToken)
+    {
+        var (res, room) = Rooms.JoinFromList(hostToken, Session.Token!, Session.Name!);
+        if (room is null) { _error = Message(res); return; }
+        Nav.NavigateTo($"/phong/{room.Code}");
+    }
+
+    private static string Message(JoinResult r) => r switch
+    {
+        JoinResult.NotFound => "Không tìm thấy phòng.",
+        JoinResult.Full => "Phòng đã đủ 60 người.",
+        JoinResult.Locked => "Phòng đã khóa, cần nhập mã để vào.",
+        JoinResult.Playing => "Phòng đang chơi, chờ trận sau nhé.",
+        JoinResult.Banned => "Bạn không thể vào lại phòng này.",
+        JoinResult.LeftMatch => "Bạn đã rời trận này.",
+        JoinResult.LimitReached => "Máy chủ đã đủ 20 phòng, hãy vào một phòng có sẵn.",
+        _ => "Có lỗi, thử lại nhé.",
+    };
+
+    public void Dispose() => Rooms.ListChanged -= OnListChanged;
+}

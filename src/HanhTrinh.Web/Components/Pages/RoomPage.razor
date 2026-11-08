@@ -1,0 +1,349 @@
+@page "/phong/{Code}"
+@implements IDisposable
+@inject PlayerSession Session
+@inject RoomManager Rooms
+@inject NavigationManager Nav
+@inject IJSRuntime JS
+
+@if (_vm is null)
+{
+    <div class="page center"><p class="muted">Đang vào phòng…</p></div>
+}
+else if (_results is not null)
+{
+    <div class="page"><div class="card wide">
+        <ResultsView Game="_results" History="_history" MyToken="@_token" OnAgain="PlayAgain" OnMenu="ToMenu" />
+    </div></div>
+}
+else if (_vm.Status == RoomStatus.Lobby && _vm.MyIcon is null || _changingIcon && _vm.Status == RoomStatus.Lobby)
+{
+    <div class="page"><div class="card wide">
+        <BackButton OnClick="LeaveLobby" />
+        <h2>Chọn biểu tượng của bạn</h2>
+        <p class="muted">Biểu tượng đã có người chọn sẽ bị tô xám.</p>
+        @if (_error is not null) { <p class="error">@_error</p> }
+        <div class="icon-grid">
+            @foreach (var icon in Rooms.Content.Icons)
+            {
+                var owner = _vm.Seats.FirstOrDefault(s => s.IconId == icon);
+                var mine = owner?.Token == _token;
+                <button class="icon-btn @(mine ? "mine" : "")" disabled="@(owner is not null && !mine)" title="@(owner?.Name)" @onclick="() => Pick(icon)">
+                    <img src="icons/@(icon).svg" alt="" />
+                </button>
+            }
+        </div>
+    </div></div>
+}
+else if (_vm.Status == RoomStatus.Lobby)
+{
+    <div class="page"><div class="card wide">
+        <div class="row between">
+            <BackButton OnClick="LeaveLobby" />
+            <button class="btn small" @onclick="() => _changingIcon = true">Đổi biểu tượng</button>
+        </div>
+        <div class="lobby-head">
+            <div>
+                <div class="muted">Mã phòng</div>
+                <div class="room-code">@_vm.Code</div>
+            </div>
+            <div class="count">👥 @_vm.Seats.Count/@Room.MaxSeats</div>
+        </div>
+        @if (_vm.IsHost)
+        {
+            <div class="row gap">
+                <button class="btn big primary" disabled="@(_vm.Seats.Count < 1)" @onclick="Start">▶ Bắt đầu</button>
+                <button class="btn big" @onclick="ToggleLock">@(_vm.Locked ? "🔓 Mở khóa" : "🔒 Khóa phòng")</button>
+            </div>
+            @if (_vm.Locked) { <p class="muted">Phòng đang khóa: chỉ vào được bằng mã phòng.</p> }
+        }
+        else
+        {
+            <p class="muted">Đang chờ chủ phòng bắt đầu… @(_vm.Locked ? "(phòng đang khóa)" : "")</p>
+        }
+        <div class="seats">
+            @foreach (var s in _vm.Seats)
+            {
+                <div class="seat @(s.Token == _token ? "me" : "")">
+                    @if (s.IconId is not null) { <img src="icons/@(s.IconId).svg" alt="" /> } else { <span class="noicon">?</span> }
+                    <span class="nm">@(s.IsHost ? "👑 " : "")@s.Name</span>
+                    @if (_vm.IsHost && !s.IsHost)
+                    {
+                        <button class="kick" title="Mời ra khỏi phòng" @onclick="() => Kick(s.Token)">✖</button>
+                    }
+                </div>
+            }
+        </div>
+    </div></div>
+}
+else if (_vm.Status == RoomStatus.Countdown)
+{
+    var s = SeasonCatalog.Get(_vm.NextSeason);
+    <div class="page center season-bg @s.Css">
+        <div class="countdown-card">
+            <div class="countdown">@Math.Ceiling(_vm.CountdownLeft)</div>
+            <div class="season-title">@s.Emoji Mùa @SeasonName(_vm.NextSeason): <b>@s.Title</b></div>
+            <div class="season-cols">
+                <div class="pros"><h4>Lợi</h4>@foreach (var p in s.Pros) { <div>＋ @p</div> }</div>
+                <div class="cons"><h4>Hại</h4>@foreach (var c in s.Cons) { <div>－ @c</div> }</div>
+            </div>
+        </div>
+    </div>
+}
+else if (_vm.Game is { } g)
+{
+    var me = g.Me;
+    <div class="game">
+        <div class="map-area">
+            <div class="map-top">
+                <BackButton OnClick="LeaveMatch" />
+                <span class="season-pill @SeasonCatalog.Get(g.Season).Css">@SeasonCatalog.Get(g.Season).Emoji @SeasonCatalog.Get(g.Season).Title</span>
+            </div>
+            <BoardMap Game="g" MyToken="@_token" MyAnimTile="_anim == Anim.None ? null : _animTile" />
+
+            @if (_anim != Anim.None)
+            {
+                <div class="popup dice-pop">
+                    <div class="dice @(_anim == Anim.Rolling ? "spin" : "")">@DiceFace(_diceFace)</div>
+                    @if (_anim != Anim.Rolling && _roll is not null)
+                    {
+                        <div class="formula">@_roll.Formula @(_roll.Formula.Contains('=') ? "" : "bước")</div>
+                    }
+                </div>
+            }
+            else if (me.Phase == Phase.Question && me.Question is { } q)
+            {
+                <div class="popup question @(q.Bonus ? "bonus" : "")">
+                    <div class="q-head">
+                        <span>@(q.Bonus ? "✨ Câu lịch sử · " : "")📍 @me.TileName</span>
+                        @if (q.DeadlineLeft is { } dl) { <span class="deadline">⏳ @Math.Ceiling(dl)s</span> }
+                        @if (me.PheBinhActive) { <span class="chip buff">🪞 được chọn lại 1 lần</span> }
+                    </div>
+                    <div class="q-text">@q.Text</div>
+                    <div class="options">
+                        @for (var i = 0; i < q.Options.Count; i++)
+                        {
+                            var idx = i;
+                            var opt = q.Options[i];
+                            <button class="opt" disabled="@(opt is null || _busy)" @onclick="() => Answer(idx)">
+                                <b>@("ABCD"[i])</b> @(opt ?? "—")
+                            </button>
+                        }
+                    </div>
+                    @if (me.Pending.Contains(EffectKind.NamQuyenChuDong))
+                    {
+                        <div class="choose">🎯 Nắm quyền chủ động — chọn số bước:
+                            @for (var n = 1; n <= 6; n++) { var v = n; <button class="btn small @(_chosen == v ? "primary" : "")" @onclick="() => _chosen = v">@v</button> }
+                        </div>
+                    }
+                    @if (me.Bag.Count > 0)
+                    {
+                        <div class="bag">🎒
+                            @foreach (var k in me.Bag.Distinct())
+                            {
+                                var e = EffectCatalog.Get(k);
+                                var kk = k;
+                                <button class="btn small buffbtn" title="@e.Description" disabled="@(_busy || q.Bonus && k == EffectKind.DoiMoi)" @onclick="() => UseBag(kk)">@e.Icon @e.Name</button>
+                            }
+                        </div>
+                    }
+                </div>
+            }
+            else if (me.Phase == Phase.Cooldown && me.LastWrong is { } w)
+            {
+                <div class="popup wrong">
+                    <div class="q-head"><span>✘ Chưa đúng rồi!</span><span class="deadline">⏳ @Math.Ceiling(me.PhaseLeft)s</span></div>
+                    <div class="q-text">@w.Text</div>
+                    <ul class="answers">
+                        @for (var o = 0; o < w.Options.Length; o++)
+                        {
+                            <li class="@(o == w.Answer ? "correct" : o == w.Chosen ? "chosen" : "")">@w.Options[o]</li>
+                        }
+                    </ul>
+                    <p class="expl">💡 @w.Explanation <i>(Giáo trình, tr.@w.Page)</i></p>
+                </div>
+            }
+            else if (me.Phase == Phase.Delay)
+            {
+                <div class="popup small-pop">⏳ @(g.Season == Season.Thu ? "Đang trú bão / " : "")Câu hỏi sắp hiện… @Math.Ceiling(me.PhaseLeft)s</div>
+            }
+            else if (me.Phase == Phase.Finished)
+            {
+                <div class="popup small-pop">🏁 Bạn đã về đích Cà Mau sau <b>@RoomVmBuilder.Clock(me.FinishTime ?? TimeSpan.Zero)</b>!<br /><span class="muted">Chờ các bạn khác…</span></div>
+            }
+            @if (_toast is not null)
+            {
+                <div class="toast">@_toast</div>
+            }
+        </div>
+        <SidePanel Game="g" MyToken="@_token" />
+    </div>
+}
+
+@code {
+    [Parameter] public string Code { get; set; } = "";
+
+    private enum Anim { None, Rolling, Showing, Moving }
+
+    private Room? _room;
+    private string? _token;
+    private RoomVm? _vm;
+    private GameVm? _results;
+    private IReadOnlyList<SeenEntry> _history = [];
+    private int _dismissedSerial;
+    private bool _changingIcon;
+    private string? _error;
+    private string? _toast;
+    private DateTime _toastUntil;
+    private bool _busy;
+    private int? _chosen;
+    private Timer? _timer;
+
+    private Anim _anim;
+    private DiceRoll? _roll;
+    private int _lastSeq = -1;
+    private int _animTile;
+    private int _diceFace = 1;
+    private DateTime _animNext;
+
+    protected override async Task OnAfterRenderAsync(bool first)
+    {
+        if (!first) return;
+        _token = await Session.EnsureAsync();
+        _room = Rooms.FindByToken(_token);
+        if (_room is null || _room.Code != Code) { Nav.NavigateTo("/phong"); return; }
+        _room.Changed += OnChanged;
+        Refresh();
+        _timer = new Timer(_ => InvokeAsync(Tick), null, 200, 200);
+    }
+
+    private void OnChanged() => InvokeAsync(Refresh);
+
+    private void Refresh()
+    {
+        if (_room is null || _token is null) return;
+        IReadOnlyList<SeenEntry>? hist = null;
+        bool kicked;
+        lock (Rooms.Gate)
+        {
+            _vm = RoomVmBuilder.Build(_room, _token, DateTime.UtcNow);
+            kicked = _room.SeatOf(_token) is null;
+            if (_vm.Game is { Over: true } && _vm.MatchSerial > _dismissedSerial && _results is null)
+                hist = _room.Match!.Player(_token)!.History.ToList();
+        }
+        if (kicked) { Dispose(); Nav.NavigateTo("/phong?kicked=1"); return; }
+        if (hist is not null) { _results = _vm.Game; _history = hist; _anim = Anim.None; }
+
+        var roll = _vm.Game?.Me.LastRoll;
+        if (_vm.Game is null) _lastSeq = -1;
+        else if (_lastSeq == -1) _lastSeq = roll?.Seq ?? 0;
+        else if (roll is not null && roll.Seq != _lastSeq && _results is null)
+        {
+            _lastSeq = roll.Seq;
+            _roll = roll;
+            _anim = Anim.Rolling;
+            _animTile = roll.From;
+            _animNext = DateTime.UtcNow.AddMilliseconds(900);
+        }
+        StateHasChanged();
+    }
+
+    private void Tick()
+    {
+        var now = DateTime.UtcNow;
+        if (_toast is not null && now > _toastUntil) _toast = null;
+        switch (_anim)
+        {
+            case Anim.Rolling:
+                _diceFace = Random.Shared.Next(1, 7);
+                if (now >= _animNext) { _diceFace = _roll!.Raw; _anim = Anim.Showing; _animNext = now.AddMilliseconds(1100); }
+                break;
+            case Anim.Showing when now >= _animNext:
+                _anim = Anim.Moving; _animNext = now; break;
+            case Anim.Moving when now >= _animNext:
+                if (_animTile >= _roll!.To) _anim = Anim.None;
+                else { _animTile++; _animNext = now.AddMilliseconds(160); }
+                break;
+        }
+        if (_vm is not null && (_vm.Status != RoomStatus.Lobby || _anim != Anim.None)) Refresh();
+        else StateHasChanged();
+    }
+
+    private static string DiceFace(int n) => n switch { 1 => "⚀", 2 => "⚁", 3 => "⚂", 4 => "⚃", 5 => "⚄", _ => "⚅" };
+    private static string SeasonName(Season s) => s switch { Season.Xuan => "Xuân", Season.Ha => "Hạ", Season.Thu => "Thu", _ => "Đông" };
+
+    private void Toast(IEnumerable<string> lines)
+    {
+        var text = string.Join(" · ", lines);
+        if (text.Length == 0) return;
+        _toast = text; _toastUntil = DateTime.UtcNow.AddSeconds(4);
+    }
+
+    private void Answer(int idx)
+    {
+        if (_room is null || _busy) return;
+        _busy = true;
+        AnswerOutcome o;
+        lock (Rooms.Gate) o = _room.Match?.Answer(_token!, idx, _chosen) ?? AnswerOutcome.Rejected;
+        _busy = false;
+        if (!o.Accepted) return;
+        _chosen = null;
+        Toast(o.Correct && o.Roll is null ? o.Events.Prepend("✔ Chính xác!") : o.Events);
+        _room.RaiseChanged();
+    }
+
+    private void UseBag(EffectKind k)
+    {
+        if (_room is null) return;
+        bool ok;
+        lock (Rooms.Gate) ok = _room.Match?.UseBagItem(_token!, k, _chosen) ?? false;
+        if (ok) _room.RaiseChanged();
+    }
+
+    private void Pick(string icon)
+    {
+        if (_room is null) return;
+        if (Rooms.PickIcon(_room, _token!, icon)) { _changingIcon = false; _error = null; }
+        else _error = "Biểu tượng này vừa có người chọn, bạn chọn cái khác nhé.";
+        Refresh();
+    }
+
+    private void Start() { if (_room is not null) Rooms.Start(_room, _token!); }
+    private void ToggleLock() { if (_room is not null && _vm is not null) Rooms.SetLocked(_room, _token!, !_vm.Locked); }
+    private void Kick(string token) { if (_room is not null) Rooms.Kick(_room, _token!, token); }
+
+    private void LeaveLobby()
+    {
+        Dispose();
+        Rooms.Leave(_token!);
+        Nav.NavigateTo("/phong");
+    }
+
+    private async Task LeaveMatch()
+    {
+        if (!await JS.InvokeAsync<bool>("confirm", "Bạn chắc chắn muốn rời trận?")) return;
+        Dispose();
+        Rooms.Leave(_token!);
+        Nav.NavigateTo("/");
+    }
+
+    private void PlayAgain()
+    {
+        _dismissedSerial = _vm?.MatchSerial ?? 0;
+        _results = null;
+        _lastSeq = -1;
+        Refresh();
+    }
+
+    private void ToMenu()
+    {
+        Dispose();
+        Rooms.Leave(_token!);
+        Nav.NavigateTo("/");
+    }
+
+    public void Dispose()
+    {
+        _timer?.Dispose(); _timer = null;
+        if (_room is not null) _room.Changed -= OnChanged;
+    }
+}

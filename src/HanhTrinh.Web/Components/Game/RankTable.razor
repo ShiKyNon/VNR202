@@ -1,0 +1,24 @@
+<div class="table-wrap">
+    <table class="ranktable">
+        <thead><tr><th>#</th><th></th><th>Tên</th><th>Vị trí / Về đích</th><th>Đúng</th><th>Sai</th><th>% đúng</th></tr></thead>
+        <tbody>
+            @foreach (var r in Rows)
+            {
+                <tr class="@(r.Token == MyToken ? "me" : "")">
+                    <td>@r.Rank</td>
+                    <td><img src="icons/@(r.IconId).svg" alt="" /></td>
+                    <td>@r.Name @(r.Left ? "(đã rời)" : "")</td>
+                    <td>@(r.Finished ? "🏁 " + RoomVmBuilder.Clock(r.FinishTime!.Value) : r.TileName)</td>
+                    <td>@r.Correct</td>
+                    <td>@r.Wrong</td>
+                    <td>@r.Percent.ToString("0.#")%</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+@code {
+    [Parameter, EditorRequired] public IReadOnlyList<RankRow> Rows { get; set; } = [];
+    [Parameter] public string? MyToken { get; set; }
+}

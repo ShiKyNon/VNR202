@@ -5,7 +5,8 @@ public enum TileMark { None, Buff, Debuff }
 /// <summary>Luật một trận. Không thread-safe: Room gọi trong lock.</summary>
 public sealed class Match
 {
-    public static readonly TimeSpan Cooldown = TimeSpan.FromSeconds(5);
+    // shortcut: settable only so local e2e runs (HT_FAST=1 in Development) finish quickly
+    public static TimeSpan Cooldown { get; set; } = TimeSpan.FromSeconds(5);
     public static readonly TimeSpan GraceAfterFirstFinish = TimeSpan.FromSeconds(90);
     public static readonly TimeSpan HardCap = TimeSpan.FromMinutes(20);
     public const int FinishTile = 65;

@@ -1,0 +1,39 @@
+@page "/choi"
+@inject PlayerSession Session
+@inject NavigationManager Nav
+
+<div class="page center">
+    <div class="card narrow">
+        <BackButton Href="/" />
+        <h2>Bạn tên là gì?</h2>
+        <form @onsubmit="Save" @onsubmit:preventDefault>
+            <input class="input big" maxlength="@NameFilter.MaxLength" placeholder="Nhập tên (tối đa 16 ký tự)" @bind="_name" @bind:event="oninput" autofocus />
+            @if (_error is not null) { <p class="error">@_error</p> }
+            <button class="btn big primary" type="submit" disabled="@(!_ready)">Tiếp tục →</button>
+        </form>
+    </div>
+</div>
+
+@code {
+    private string _name = "";
+    private string? _error;
+    private bool _ready;
+
+    protected override async Task OnAfterRenderAsync(bool first)
+    {
+        if (!first) return;
+        await Session.EnsureAsync();
+        _name = Session.Name ?? "";
+        _ready = true;
+        StateHasChanged();
+    }
+
+    private async Task Save()
+    {
+        var (ok, name, error) = NameFilter.Validate(_name);
+        _error = error;
+        if (!ok) return;
+        await Session.SetNameAsync(name);
+        Nav.NavigateTo("/phong");
+    }
+}
