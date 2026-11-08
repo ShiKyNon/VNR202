@@ -26,7 +26,7 @@ public static class RoomVmBuilder
             if (p.Phase == Phase.Question && p.Current is { } cur)
                 q = new QuestionVm(cur.Id, cur.Text,
                     p.Order.Select(o => p.Removed.Contains(o) ? null : cur.Options[o]).ToList(),
-                    p.CurrentIsBonus, p.QuestionDeadline is { } d ? Math.Max(0, (d - now).TotalSeconds) : null);
+                    p.CurrentIsBonus, p.QuestionDeadline is { } d ? Math.Clamp((d - now).TotalSeconds, 0, Match.ChuQuanLimit.TotalSeconds) : null);
             var me = new MeVm(p.Phase, p.Tile, m.TileOf(p).Name, q,
                 Math.Max(0, (p.PhaseEndsAt - now).TotalSeconds), p.LastWrong, p.Correct, p.Wrong,
                 p.Bag.ToList(), p.Pending.ToList(), p.Log.ToList(), p.LastRoll, p.NeedCorrect, p.PheBinhActive, p.FinishTime);

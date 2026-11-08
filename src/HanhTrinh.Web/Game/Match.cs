@@ -9,6 +9,9 @@ public sealed class Match
     public static TimeSpan Cooldown { get; set; } = TimeSpan.FromSeconds(5);
     public static readonly TimeSpan GraceAfterFirstFinish = TimeSpan.FromSeconds(90);
     public static readonly TimeSpan HardCap = TimeSpan.FromMinutes(20);
+    public static readonly TimeSpan ChuQuanLimit = TimeSpan.FromSeconds(10);
+    /// <summary>Bù thời gian hoạt ảnh xúc xắc/di chuyển bên client trước khi câu hỏi thực sự hiện.</summary>
+    public static readonly TimeSpan AnimationGrace = TimeSpan.FromSeconds(4);
     public const int FinishTile = 65;
     public const int BagMax = 3;
     public const int MarksPerKind = 7;
@@ -84,7 +87,7 @@ public sealed class Match
     private void Reveal(PlayerState p)
     {
         p.Phase = Phase.Question;
-        if (p.Pending.Remove(EffectKind.ChuQuanNongVoi)) p.QuestionDeadline = _now() + TimeSpan.FromSeconds(10);
+        if (p.Pending.Remove(EffectKind.ChuQuanNongVoi)) p.QuestionDeadline = _now() + ChuQuanLimit + AnimationGrace;
     }
 
     public static int DisplayIndexOf(PlayerState p, int original) => Array.IndexOf(p.Order, original);
@@ -205,7 +208,9 @@ public sealed class Match
             case EffectKind.DoiMoi:
                 if (p.CurrentIsBonus) return false;
                 p.Current = _picker.Next(_seen.For(p.Token));
+                var keep = p.QuestionDeadline;
                 SetupQuestion(p);
+                p.QuestionDeadline = keep;
                 break;
             case EffectKind.PheBinh:
                 if (p.PheBinhActive) return false;

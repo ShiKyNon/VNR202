@@ -196,7 +196,9 @@ else if (_vm.Game is { } g)
     private DateTime _toastUntil;
     private bool _busy;
     private int? _chosen;
-    private Timer? _timer;
+    private readonly CancellationTokenSource _cts = new();
+    private volatile bool _dirty;
+    private DateTime _lastRefresh;
 
     private Anim _anim;
     private DiceRoll? _roll;
@@ -213,25 +215,38 @@ else if (_vm.Game is { } g)
         if (_room is null || _room.Code != Code) { Nav.NavigateTo("/phong"); return; }
         _room.Changed += OnChanged;
         Refresh();
-        _timer = new Timer(_ => InvokeAsync(Tick), null, 200, 200);
+        _ = Loop(_cts.Token);
     }
 
-    private void OnChanged() => InvokeAsync(Refresh);
+    // Vòng lặp không dồn hàng: tick sau chỉ chạy khi tick trước đã xong.
+    private async Task Loop(CancellationToken ct)
+    {
+        using var timer = new PeriodicTimer(TimeSpan.FromMilliseconds(200));
+        try { while (await timer.WaitForNextTickAsync(ct)) await InvokeAsync(Tick); }
+        catch (OperationCanceledException) { }
+        catch (ObjectDisposedException) { }
+    }
+
+    // Thay đổi từ người khác: chỉ đánh dấu, Tick sẽ dựng lại tối đa 2 lần/giây.
+    private void OnChanged() => _dirty = true;
 
     private void Refresh()
     {
         if (_room is null || _token is null) return;
+        _dirty = false;
+        _lastRefresh = DateTime.UtcNow;
         IReadOnlyList<SeenEntry>? hist = null;
         bool kicked;
         lock (Rooms.Gate)
         {
             _vm = RoomVmBuilder.Build(_room, _token, DateTime.UtcNow);
             kicked = _room.SeatOf(_token) is null;
-            if (_vm.Game is { Over: true } && _vm.MatchSerial > _dismissedSerial && _results is null)
+            if (_vm.Status == RoomStatus.Countdown) _results = null;
+            else if (_vm.Game is { Over: true } && _vm.MatchSerial > _dismissedSerial && _results is null)
                 hist = _room.Match!.Player(_token)!.History.ToList();
         }
         if (kicked) { Dispose(); Nav.NavigateTo("/phong?kicked=1"); return; }
-        if (hist is not null) { _results = _vm.Game; _history = hist; _anim = Anim.None; }
+        if (hist is not null) { _results = _vm.Game; _history = hist; _anim = Anim.None; _dismissedSerial = _vm.MatchSerial; }
 
         var roll = _vm.Game?.Me.LastRoll;
         if (_vm.Game is null) _lastSeq = -1;
@@ -264,8 +279,10 @@ else if (_vm.Game is { } g)
                 else { _animTile++; _animNext = now.AddMilliseconds(160); }
                 break;
         }
-        if (_vm is not null && (_vm.Status != RoomStatus.Lobby || _anim != Anim.None)) Refresh();
-        else StateHasChanged();
+        var since = now - _lastRefresh;
+        var live = _vm is not null && _vm.Status != RoomStatus.Lobby && _results is null;
+        if (_dirty && since >= TimeSpan.FromMilliseconds(500) || live && since >= TimeSpan.FromSeconds(1)) Refresh();
+        else if (_anim != Anim.None || _toast is not null || _dirty) StateHasChanged();
     }
 
     private static string DiceFace(int n) => n switch { 1 => "⚀", 2 => "⚁", 3 => "⚂", 4 => "⚃", 5 => "⚄", _ => "⚅" };
@@ -289,6 +306,7 @@ else if (_vm.Game is { } g)
         _chosen = null;
         Toast(o.Correct && o.Roll is null ? o.Events.Prepend("✔ Chính xác!") : o.Events);
         _room.RaiseChanged();
+        Refresh();
     }
 
     private void UseBag(EffectKind k)
@@ -296,7 +314,7 @@ else if (_vm.Game is { } g)
         if (_room is null) return;
         bool ok;
         lock (Rooms.Gate) ok = _room.Match?.UseBagItem(_token!, k, _chosen) ?? false;
-        if (ok) _room.RaiseChanged();
+        if (ok) { _room.RaiseChanged(); Refresh(); }
     }
 
     private void Pick(string icon)
@@ -307,9 +325,9 @@ else if (_vm.Game is { } g)
         Refresh();
     }
 
-    private void Start() { if (_room is not null) Rooms.Start(_room, _token!); }
-    private void ToggleLock() { if (_room is not null && _vm is not null) Rooms.SetLocked(_room, _token!, !_vm.Locked); }
-    private void Kick(string token) { if (_room is not null) Rooms.Kick(_room, _token!, token); }
+    private void Start() { if (_room is not null && Rooms.Start(_room, _token!)) Refresh(); }
+    private void ToggleLock() { if (_room is not null && _vm is not null) { Rooms.SetLocked(_room, _token!, !_vm.Locked); Refresh(); } }
+    private void Kick(string token) { if (_room is not null) { Rooms.Kick(_room, _token!, token); Refresh(); } }
 
     private void LeaveLobby()
     {
@@ -343,7 +361,7 @@ else if (_vm.Game is { } g)
 
     public void Dispose()
     {
-        _timer?.Dispose(); _timer = null;
+        if (!_cts.IsCancellationRequested) _cts.Cancel();
         if (_room is not null) _room.Changed -= OnChanged;
     }
 }

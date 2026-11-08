@@ -193,7 +193,7 @@ public class EffectsTests
         m.Answer("t1", WrongIdx(m, "t1"));          // sai → chờ 5s
         c.Advance(TimeSpan.FromSeconds(5)); m.Tick(); // câu mới, có hạn 10s
         Assert.NotNull(p.QuestionDeadline);
-        c.Advance(TimeSpan.FromSeconds(10)); m.Tick();
+        c.Advance(Match.ChuQuanLimit + Match.AnimationGrace); m.Tick();
         Assert.Equal(2, p.Wrong);
         Assert.Equal(Phase.Cooldown, p.Phase);
     }
@@ -243,5 +243,29 @@ public class EffectsTests
         var (m, c, p) = Setup(Season.Xuan, Idx("Cần Thơ"));
         m.Answer("t1", WrongIdx(m, "t1"));
         Assert.Equal(c.Now.AddSeconds(8), p.PhaseEndsAt);
+    }
+}
+
+public class ReviewFixTests
+{
+    [Fact]
+    public void ChuQuan_GraceForClientAnimation_And_DoiMoiKeepsDeadline()
+    {
+        var (m, c) = TestData.NewMatch(Season.Thu, 1);
+        foreach (var t in Enumerable.Range(1, 65)) m.SetMark(t, TileMark.None);
+        TestData.Put(m, "t1", 17);
+        var p = m.Player("t1")!;
+        p.Pending.Add(EffectKind.ChuQuanNongVoi);
+        m.Answer("t1", TestData.WrongIdx(m, "t1"));
+        c.Advance(TimeSpan.FromSeconds(5)); m.Tick();
+        var deadline = p.QuestionDeadline;
+        Assert.Equal(c.Now + Match.ChuQuanLimit + Match.AnimationGrace, deadline);
+        p.Bag.Add(EffectKind.DoiMoi);
+        Assert.True(m.UseBagItem("t1", EffectKind.DoiMoi));
+        Assert.Equal(deadline, p.QuestionDeadline);
+        c.Advance(Match.ChuQuanLimit); m.Tick();
+        Assert.Equal(Phase.Question, p.Phase);
+        c.Advance(Match.AnimationGrace); m.Tick();
+        Assert.Equal(Phase.Cooldown, p.Phase);
     }
 }

@@ -26,7 +26,21 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment() && Environment.GetEnvironmentVariable("HT_FAST") == "1") Match.Cooldown = TimeSpan.FromMilliseconds(300);
 
 // shortcut: EnsureCreated, no schema upgrades — switch to per-provider migrations when the schema changes
-using (var db = app.Services.GetRequiredService<IDbContextFactory<AppDb>>().CreateDbContext()) db.Database.EnsureCreated();
+// Database lỗi không được làm sập game: chỉ phần lưu kỷ lục cần nó.
+for (var attempt = 1; attempt <= 3; attempt++)
+{
+    try
+    {
+        using var db = app.Services.GetRequiredService<IDbContextFactory<AppDb>>().CreateDbContext();
+        db.Database.EnsureCreated();
+        break;
+    }
+    catch (Exception ex)
+    {
+        app.Logger.LogError(ex, "Khởi tạo database thất bại (lần {Attempt}/3)", attempt);
+        if (attempt < 3) Thread.Sleep(TimeSpan.FromSeconds(3));
+    }
+}
 
 var archive = app.Services.GetRequiredService<MatchArchive>();
 app.Services.GetRequiredService<RoomManager>().MatchEnded += (room, match) => _ = Task.Run(async () =>
