@@ -1,0 +1,554 @@
+[
+ {
+  "name": "Hà Giang",
+  "region": "Bac",
+  "tags": [
+   "MienNuiPhiaBac"
+  ],
+  "x": 283,
+  "y": 82
+ },
+ {
+  "name": "Cao Bằng",
+  "region": "Bac",
+  "tags": [
+   "MienNuiPhiaBac"
+  ],
+  "x": 405,
+  "y": 98
+ },
+ {
+  "name": "Lạng Sơn",
+  "region": "Bac",
+  "tags": [
+   "MienNuiPhiaBac"
+  ],
+  "x": 452,
+  "y": 184
+ },
+ {
+  "name": "Quảng Ninh",
+  "region": "Bac",
+  "tags": [
+   "VenBien"
+  ],
+  "x": 503,
+  "y": 273
+ },
+ {
+  "name": "Bắc Giang",
+  "region": "Bac",
+  "tags": [
+   "MienNuiPhiaBac"
+  ],
+  "x": 423,
+  "y": 234
+ },
+ {
+  "name": "Thái Nguyên",
+  "region": "Bac",
+  "tags": [
+   "MienNuiPhiaBac"
+  ],
+  "x": 373,
+  "y": 203
+ },
+ {
+  "name": "Bắc Kạn",
+  "region": "Bac",
+  "tags": [
+   "MienNuiPhiaBac"
+  ],
+  "x": 364,
+  "y": 152
+ },
+ {
+  "name": "Tuyên Quang",
+  "region": "Bac",
+  "tags": [
+   "MienNuiPhiaBac"
+  ],
+  "x": 305,
+  "y": 187
+ },
+ {
+  "name": "Yên Bái",
+  "region": "Bac",
+  "tags": [
+   "MienNuiPhiaBac"
+  ],
+  "x": 247,
+  "y": 197
+ },
+ {
+  "name": "Lào Cai",
+  "region": "Bac",
+  "tags": [
+   "MienNuiPhiaBac"
+  ],
+  "x": 187,
+  "y": 118
+ },
+ {
+  "name": "Lai Châu",
+  "region": "Bac",
+  "tags": [
+   "MienNuiPhiaBac"
+  ],
+  "x": 123,
+  "y": 126
+ },
+ {
+  "name": "Điện Biên",
+  "region": "Bac",
+  "tags": [
+   "MienNuiPhiaBac"
+  ],
+  "x": 97,
+  "y": 232
+ },
+ {
+  "name": "Sơn La",
+  "region": "Bac",
+  "tags": [
+   "MienNuiPhiaBac"
+  ],
+  "x": 181,
+  "y": 252
+ },
+ {
+  "name": "Hòa Bình",
+  "region": "Bac",
+  "tags": [
+   "MienNuiPhiaBac"
+  ],
+  "x": 304,
+  "y": 299
+ },
+ {
+  "name": "Phú Thọ",
+  "region": "Bac",
+  "tags": [
+   "MienNuiPhiaBac"
+  ],
+  "x": 298,
+  "y": 244
+ },
+ {
+  "name": "Vĩnh Phúc",
+  "region": "Bac",
+  "tags": [],
+  "x": 340,
+  "y": 232
+ },
+ {
+  "name": "Hà Nội",
+  "region": "Bac",
+  "tags": [],
+  "x": 352,
+  "y": 278
+ },
+ {
+  "name": "Bắc Ninh",
+  "region": "Bac",
+  "tags": [],
+  "x": 382,
+  "y": 246
+ },
+ {
+  "name": "Hải Dương",
+  "region": "Bac",
+  "tags": [],
+  "x": 413,
+  "y": 276
+ },
+ {
+  "name": "Hải Phòng",
+  "region": "Bac",
+  "tags": [
+   "VenBien"
+  ],
+  "x": 456,
+  "y": 288
+ },
+ {
+  "name": "Thái Bình",
+  "region": "Bac",
+  "tags": [
+   "VenBien"
+  ],
+  "x": 432,
+  "y": 325
+ },
+ {
+  "name": "Hưng Yên",
+  "region": "Bac",
+  "tags": [],
+  "x": 390,
+  "y": 313
+ },
+ {
+  "name": "Hà Nam",
+  "region": "Bac",
+  "tags": [],
+  "x": 347,
+  "y": 322
+ },
+ {
+  "name": "Nam Định",
+  "region": "Bac",
+  "tags": [
+   "VenBien"
+  ],
+  "x": 402,
+  "y": 356
+ },
+ {
+  "name": "Ninh Bình",
+  "region": "Bac",
+  "tags": [
+   "VenBien"
+  ],
+  "x": 359,
+  "y": 364
+ },
+ {
+  "name": "Thanh Hóa",
+  "region": "Trung",
+  "tags": [
+   "VenBien",
+   "BacTrungBo"
+  ],
+  "x": 339,
+  "y": 404
+ },
+ {
+  "name": "Nghệ An",
+  "region": "Trung",
+  "tags": [
+   "VenBien",
+   "BacTrungBo"
+  ],
+  "x": 323,
+  "y": 494
+ },
+ {
+  "name": "Hà Tĩnh",
+  "region": "Trung",
+  "tags": [
+   "VenBien",
+   "BacTrungBo"
+  ],
+  "x": 371,
+  "y": 552
+ },
+ {
+  "name": "Quảng Bình",
+  "region": "Trung",
+  "tags": [
+   "VenBien",
+   "BacTrungBo"
+  ],
+  "x": 418,
+  "y": 644
+ },
+ {
+  "name": "Quảng Trị",
+  "region": "Trung",
+  "tags": [
+   "VenBien",
+   "BacTrungBo"
+  ],
+  "x": 475,
+  "y": 719
+ },
+ {
+  "name": "Thừa Thiên Huế",
+  "short": "Huế",
+  "region": "Trung",
+  "tags": [
+   "VenBien",
+   "BacTrungBo"
+  ],
+  "x": 532,
+  "y": 756
+ },
+ {
+  "name": "Đà Nẵng",
+  "region": "Trung",
+  "tags": [
+   "VenBien"
+  ],
+  "x": 589,
+  "y": 793
+ },
+ {
+  "name": "Hoàng Sa",
+  "region": "Trung",
+  "tags": [
+   "Dao"
+  ],
+  "x": 941,
+  "y": 746
+ },
+ {
+  "name": "Quảng Nam",
+  "region": "Trung",
+  "tags": [
+   "VenBien"
+  ],
+  "x": 598,
+  "y": 843
+ },
+ {
+  "name": "Quảng Ngãi",
+  "region": "Trung",
+  "tags": [
+   "VenBien"
+  ],
+  "x": 646,
+  "y": 890
+ },
+ {
+  "name": "Bình Định",
+  "region": "Trung",
+  "tags": [
+   "VenBien"
+  ],
+  "x": 674,
+  "y": 1019
+ },
+ {
+  "name": "Phú Yên",
+  "region": "Trung",
+  "tags": [
+   "VenBien"
+  ],
+  "x": 693,
+  "y": 1104
+ },
+ {
+  "name": "Khánh Hòa",
+  "region": "Trung",
+  "tags": [
+   "VenBien"
+  ],
+  "x": 683,
+  "y": 1192
+ },
+ {
+  "name": "Trường Sa",
+  "region": "Trung",
+  "tags": [
+   "Dao"
+  ],
+  "x": 1083,
+  "y": 1407
+ },
+ {
+  "name": "Ninh Thuận",
+  "region": "Trung",
+  "tags": [
+   "VenBien"
+  ],
+  "x": 665,
+  "y": 1263
+ },
+ {
+  "name": "Bình Thuận",
+  "region": "Trung",
+  "tags": [
+   "VenBien"
+  ],
+  "x": 579,
+  "y": 1330
+ },
+ {
+  "name": "Kon Tum",
+  "region": "TayNguyen",
+  "tags": [],
+  "x": 551,
+  "y": 945
+ },
+ {
+  "name": "Gia Lai",
+  "region": "TayNguyen",
+  "tags": [],
+  "x": 570,
+  "y": 1029
+ },
+ {
+  "name": "Đắk Lắk",
+  "region": "TayNguyen",
+  "tags": [],
+  "x": 589,
+  "y": 1139
+ },
+ {
+  "name": "Đắk Nông",
+  "region": "TayNguyen",
+  "tags": [],
+  "x": 532,
+  "y": 1208
+ },
+ {
+  "name": "Lâm Đồng",
+  "region": "TayNguyen",
+  "tags": [],
+  "x": 598,
+  "y": 1250
+ },
+ {
+  "name": "Bình Phước",
+  "region": "Nam",
+  "tags": [],
+  "x": 456,
+  "y": 1244
+ },
+ {
+  "name": "Tây Ninh",
+  "region": "Nam",
+  "tags": [],
+  "x": 380,
+  "y": 1290
+ },
+ {
+  "name": "Bình Dương",
+  "region": "Nam",
+  "tags": [],
+  "x": 436,
+  "y": 1310
+ },
+ {
+  "name": "Đồng Nai",
+  "region": "Nam",
+  "tags": [],
+  "x": 489,
+  "y": 1318
+ },
+ {
+  "name": "Bà Rịa – Vũng Tàu",
+  "short": "Vũng Tàu",
+  "region": "Nam",
+  "tags": [
+   "VenBien"
+  ],
+  "x": 499,
+  "y": 1381
+ },
+ {
+  "name": "TP. Hồ Chí Minh",
+  "short": "TP.HCM",
+  "region": "Nam",
+  "tags": [
+   "VenBien"
+  ],
+  "x": 447,
+  "y": 1352
+ },
+ {
+  "name": "Long An",
+  "region": "Nam",
+  "tags": [],
+  "x": 396,
+  "y": 1342
+ },
+ {
+  "name": "Tiền Giang",
+  "region": "Nam",
+  "tags": [
+   "VenBien"
+  ],
+  "x": 414,
+  "y": 1382
+ },
+ {
+  "name": "Bến Tre",
+  "region": "Nam",
+  "tags": [
+   "VenBien"
+  ],
+  "x": 442,
+  "y": 1415
+ },
+ {
+  "name": "Trà Vinh",
+  "region": "Nam",
+  "tags": [
+   "VenBien"
+  ],
+  "x": 412,
+  "y": 1447
+ },
+ {
+  "name": "Vĩnh Long",
+  "region": "Nam",
+  "tags": [],
+  "x": 380,
+  "y": 1409
+ },
+ {
+  "name": "Đồng Tháp",
+  "region": "Nam",
+  "tags": [],
+  "x": 345,
+  "y": 1370
+ },
+ {
+  "name": "An Giang",
+  "region": "Nam",
+  "tags": [],
+  "x": 297,
+  "y": 1381
+ },
+ {
+  "name": "Kiên Giang",
+  "region": "Nam",
+  "tags": [
+   "VenBien"
+  ],
+  "x": 276,
+  "y": 1428
+ },
+ {
+  "name": "Cần Thơ",
+  "region": "Nam",
+  "tags": [],
+  "x": 337,
+  "y": 1417
+ },
+ {
+  "name": "Hậu Giang",
+  "region": "Nam",
+  "tags": [],
+  "x": 328,
+  "y": 1460
+ },
+ {
+  "name": "Sóc Trăng",
+  "region": "Nam",
+  "tags": [
+   "VenBien"
+  ],
+  "x": 374,
+  "y": 1469
+ },
+ {
+  "name": "Bạc Liêu",
+  "region": "Nam",
+  "tags": [
+   "VenBien"
+  ],
+  "x": 351,
+  "y": 1507
+ },
+ {
+  "name": "Cà Mau",
+  "region": "Nam",
+  "tags": [
+   "VenBien"
+  ],
+  "x": 299,
+  "y": 1533
+ }
+]

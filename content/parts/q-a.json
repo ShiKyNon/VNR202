@@ -1,0 +1,982 @@
+[
+  {
+    "id": "a-001",
+    "text": "Năm 1933, tác phẩm \"Sơ thảo lịch sử phong trào cộng sản Đông Dương\" được công bố bởi tác giả nào?",
+    "options": [
+      "Trần Phú",
+      "Lê Duẩn",
+      "Trần Văn Giàu",
+      "Hồng Thế Công (tức Hà Huy Tập)"
+    ],
+    "answer": 3,
+    "explanation": "Giáo trình nêu năm 1933, tác giả Hồng Thế Công (tức Hà Huy Tập) công bố tác phẩm này. Đây là minh chứng chuyên ngành lịch sử Đảng được nghiên cứu từ rất sớm.",
+    "page": 12,
+    "chapter": 0
+  },
+  {
+    "id": "a-002",
+    "text": "Ban Nghiên cứu Lịch sử Đảng Trung ương (nay là Viện Lịch sử Đảng) được thành lập năm nào?",
+    "options": [
+      "Năm 1962",
+      "Năm 1960",
+      "Năm 1958",
+      "Năm 1965"
+    ],
+    "answer": 0,
+    "explanation": "Năm 1962, cơ quan chuyên trách nghiên cứu, biên soạn lịch sử Đảng là Ban Nghiên cứu Lịch sử Đảng Trung ương được thành lập.",
+    "page": 12,
+    "chapter": 0
+  },
+  {
+    "id": "a-003",
+    "text": "Quyết định số 255/CT ngày 13/7/1992 của Chủ tịch Hội đồng Bộ trưởng thành lập cơ quan nào?",
+    "options": [
+      "Ban Nghiên cứu Lịch sử Đảng Trung ương",
+      "Viện Lịch sử Đảng",
+      "Hội đồng chỉ đạo biên soạn giáo trình quốc gia các môn Mác - Lênin",
+      "Hội đồng Lý luận Trung ương"
+    ],
+    "answer": 2,
+    "explanation": "Theo chỉ đạo của Bộ Chính trị khóa VII, Quyết định 255/CT thành lập Hội đồng chỉ đạo biên soạn giáo trình quốc gia các bộ môn khoa học Mác - Lênin, tư tưởng Hồ Chí Minh.",
+    "page": 12,
+    "chapter": 0
+  },
+  {
+    "id": "a-004",
+    "text": "Đối tượng nghiên cứu của khoa học Lịch sử Đảng là gì?",
+    "options": [
+      "Toàn bộ lịch sử dân tộc Việt Nam từ thời dựng nước",
+      "Sự ra đời, phát triển và hoạt động lãnh đạo của Đảng",
+      "Lịch sử quân sự Việt Nam qua các cuộc kháng chiến",
+      "Cuộc đời và sự nghiệp của các lãnh tụ cách mạng"
+    ],
+    "answer": 1,
+    "explanation": "Giáo trình xác định đối tượng nghiên cứu của khoa học Lịch sử Đảng là sự ra đời, phát triển và hoạt động lãnh đạo của Đảng qua các thời kỳ lịch sử.",
+    "page": 13,
+    "chapter": 0
+  },
+  {
+    "id": "a-005",
+    "text": "Theo giáo trình, nguyên tắc tổ chức cơ bản của Đảng Cộng sản Việt Nam là gì?",
+    "options": [
+      "Tự phê bình và phê bình",
+      "Tập thể lãnh đạo, cá nhân phụ trách",
+      "Đoàn kết thống nhất trong Đảng",
+      "Tập trung dân chủ"
+    ],
+    "answer": 3,
+    "explanation": "Đảng lấy chủ nghĩa Mác - Lênin và tư tưởng Hồ Chí Minh làm nền tảng tư tưởng, lấy tập trung dân chủ làm nguyên tắc tổ chức cơ bản.",
+    "page": 12,
+    "chapter": 0
+  },
+  {
+    "id": "a-006",
+    "text": "Theo giáo trình, điều kiện trước hết quyết định thắng lợi của cách mạng là gì?",
+    "options": [
+      "Lực lượng vũ trang hùng mạnh",
+      "Sự giúp đỡ của bạn bè quốc tế",
+      "Cương lĩnh, đường lối đúng đắn",
+      "Nền kinh tế phát triển vững mạnh"
+    ],
+    "answer": 2,
+    "explanation": "Giáo trình khẳng định: Cương lĩnh, đường lối đúng đắn là điều kiện trước hết quyết định thắng lợi của cách mạng; sai lầm về đường lối sẽ dẫn tới đổ vỡ, thất bại.",
+    "page": 14,
+    "chapter": 0
+  },
+  {
+    "id": "a-007",
+    "text": "Chính cương của Đảng được đề ra vào thời gian nào?",
+    "options": [
+      "Tháng 2/1930",
+      "Tháng 2/1951",
+      "Tháng 10/1930",
+      "Tháng 6/1991"
+    ],
+    "answer": 1,
+    "explanation": "Đảng đã đề ra Cương lĩnh chính trị đầu tiên (2/1930), Luận cương chính trị (10/1930), Chính cương của Đảng (2/1951) và Cương lĩnh năm 1991.",
+    "page": 15,
+    "chapter": 0
+  },
+  {
+    "id": "a-008",
+    "text": "Xây dựng Đảng về mặt nào nhằm bảo đảm Đảng lấy chủ nghĩa Mác - Lênin, tư tưởng Hồ Chí Minh làm nền tảng tư tưởng?",
+    "options": [
+      "Xây dựng Đảng về tư tưởng",
+      "Xây dựng Đảng về chính trị",
+      "Xây dựng Đảng về tổ chức",
+      "Xây dựng Đảng về đạo đức"
+    ],
+    "answer": 0,
+    "explanation": "Giáo trình nêu: xây dựng Đảng về tư tưởng để bảo đảm Đảng lấy chủ nghĩa Mác - Lênin, tư tưởng Hồ Chí Minh làm nền tảng tư tưởng, kim chỉ nam cho hành động.",
+    "page": 17,
+    "chapter": 0
+  },
+  {
+    "id": "a-009",
+    "text": "Theo giáo trình, quy luật ra đời và phát triển của Đảng là sự kết hợp giữa những yếu tố nào?",
+    "options": [
+      "Chủ nghĩa Mác - Lênin, phong trào công nhân và phong trào yêu nước",
+      "Chủ nghĩa Mác - Lênin, phong trào nông dân và phong trào trí thức",
+      "Phong trào công nhân, phong trào nông dân và phong trào tiểu tư sản",
+      "Tư tưởng dân chủ tư sản với phong trào yêu nước"
+    ],
+    "answer": 0,
+    "explanation": "Quy luật ra đời và phát triển của Đảng là sự kết hợp chủ nghĩa Mác - Lênin với phong trào công nhân và phong trào yêu nước Việt Nam.",
+    "page": 18,
+    "chapter": 0
+  },
+  {
+    "id": "a-010",
+    "text": "Từ sự kiện nào, Đảng trở thành Đảng cầm quyền, nắm chính quyền, lãnh đạo Nhà nước và xã hội?",
+    "options": [
+      "Hội nghị thành lập Đảng năm 1930",
+      "Chiến thắng Điện Biên Phủ năm 1954",
+      "Giải phóng miền Nam năm 1975",
+      "Cách mạng Tháng Tám năm 1945"
+    ],
+    "answer": 3,
+    "explanation": "Giáo trình nêu: từ Cách mạng Tháng Tám năm 1945, Đảng trở thành Đảng cầm quyền, nắm chính quyền, lãnh đạo Nhà nước và xã hội.",
+    "page": 18,
+    "chapter": 0
+  },
+  {
+    "id": "a-011",
+    "text": "Lịch sử Đảng Cộng sản Việt Nam giáo dục lý tưởng cách mạng với mục tiêu chiến lược nào?",
+    "options": [
+      "Dân giàu, nước mạnh, dân chủ, công bằng",
+      "Giải phóng dân tộc và thống nhất đất nước",
+      "Độc lập dân tộc và chủ nghĩa xã hội",
+      "Công nghiệp hóa, hiện đại hóa đất nước"
+    ],
+    "answer": 2,
+    "explanation": "Trong chức năng giáo dục, lịch sử Đảng giáo dục lý tưởng cách mạng với mục tiêu chiến lược là độc lập dân tộc và chủ nghĩa xã hội.",
+    "page": 19,
+    "chapter": 0
+  },
+  {
+    "id": "a-012",
+    "text": "Chủ tịch Hồ Chí Minh khẳng định: \"Đảng ta là ...\". Cụm từ nào hoàn chỉnh câu nói đó theo giáo trình?",
+    "options": [
+      "trí tuệ, là danh dự",
+      "đạo đức, là văn minh",
+      "lương tâm, là nhân phẩm",
+      "đội tiên phong, là bộ tham mưu"
+    ],
+    "answer": 1,
+    "explanation": "Giáo trình dẫn lời Chủ tịch Hồ Chí Minh: \"Đảng ta là đạo đức, là văn minh\" khi nói về vai trò giáo dục đạo đức, lối sống của lịch sử Đảng.",
+    "page": 20,
+    "chapter": 0
+  },
+  {
+    "id": "a-013",
+    "text": "Cùng với chức năng nhận thức và giáo dục, khoa học lịch sử Đảng còn có chức năng nào?",
+    "options": [
+      "Tổ chức và quản lý",
+      "Tuyên truyền và cổ động",
+      "Kiểm tra và giám sát",
+      "Dự báo và phê phán"
+    ],
+    "answer": 3,
+    "explanation": "Cùng với hai chức năng cơ bản của sử học là nhận thức và giáo dục, khoa học lịch sử Đảng còn có chức năng dự báo và phê phán.",
+    "page": 20,
+    "chapter": 0
+  },
+  {
+    "id": "a-014",
+    "text": "Năm 1942, Hồ Chí Minh dự báo \"Năm 1945 Việt Nam độc lập\" trong tác phẩm nào?",
+    "options": [
+      "Đường cách mệnh",
+      "Yêu sách của nhân dân An Nam",
+      "Lịch sử nước ta",
+      "Lời kêu gọi nhân dịp thành lập Đảng"
+    ],
+    "answer": 2,
+    "explanation": "Giáo trình nêu năm 1942, trong tác phẩm Lịch sử nước ta, Hồ Chí Minh đã dự báo: \"Năm 1945 Việt Nam độc lập\".",
+    "page": 20,
+    "chapter": 0
+  },
+  {
+    "id": "a-015",
+    "text": "Khoa học Lịch sử Đảng có nhiệm vụ hàng đầu là khẳng định giá trị khoa học, hiện thực của điều gì?",
+    "options": [
+      "Các trận đánh lớn trong hai cuộc kháng chiến",
+      "Mục tiêu chiến lược, sách lược cách mạng trong Cương lĩnh, đường lối",
+      "Các thành tựu kinh tế của công cuộc đổi mới",
+      "Tiểu sử của các lãnh tụ cách mạng"
+    ],
+    "answer": 1,
+    "explanation": "Với nhiệm vụ trình bày có hệ thống Cương lĩnh, đường lối, khoa học Lịch sử Đảng có nhiệm vụ hàng đầu là khẳng định, chứng minh giá trị của mục tiêu chiến lược và sách lược cách mạng.",
+    "page": 21,
+    "chapter": 0
+  },
+  {
+    "id": "a-016",
+    "text": "Trong nhiệm vụ tổng kết lịch sử Đảng, khái niệm nào gắn liền với những sự kiện hoặc một giai đoạn lịch sử nhất định?",
+    "options": [
+      "Kinh nghiệm lịch sử",
+      "Bài học lịch sử",
+      "Quy luật lịch sử",
+      "Vấn đề lý luận"
+    ],
+    "answer": 0,
+    "explanation": "Kinh nghiệm lịch sử gắn liền với sự kiện hoặc một giai đoạn nhất định; bài học lịch sử khái quát cao hơn, gắn với một thời kỳ dài.",
+    "page": 22,
+    "chapter": 0
+  },
+  {
+    "id": "a-017",
+    "text": "Nhận định \"Chúng ta có quyền tự hào về bản chất tốt đẹp, truyền thống anh hùng và lịch sử vẻ vang của Đảng ta\" có trong văn kiện nào?",
+    "options": [
+      "Văn kiện Đại hội XI (2011)",
+      "Văn kiện Đại hội XII (2016)",
+      "Nghị quyết Trung ương 4 khóa XI",
+      "Nghị quyết Trung ương 4 khóa XII (10/2016)"
+    ],
+    "answer": 3,
+    "explanation": "Giáo trình trích Nghị quyết Trung ương 4 khóa XII (10/2016) khẳng định niềm tự hào về Đảng của Chủ tịch Hồ Chí Minh vĩ đại.",
+    "page": 23,
+    "chapter": 0
+  },
+  {
+    "id": "a-018",
+    "text": "Theo phương pháp luận sử học mácxít, cái gì được coi là tiêu chuẩn của chân lý?",
+    "options": [
+      "Thực tiễn và kết quả của hoạt động thực tiễn",
+      "Ý kiến của số đông",
+      "Các tư liệu thành văn",
+      "Lý luận đã được thừa nhận"
+    ],
+    "answer": 0,
+    "explanation": "Giáo trình yêu cầu tư duy từ thực tiễn, coi thực tiễn và kết quả của hoạt động thực tiễn là tiêu chuẩn của chân lý.",
+    "page": 24,
+    "chapter": 0
+  },
+  {
+    "id": "a-019",
+    "text": "Khoa học lịch sử và chuyên ngành Lịch sử Đảng đều sử dụng hai phương pháp cơ bản nào?",
+    "options": [
+      "Phương pháp so sánh và phương pháp tổng kết",
+      "Phương pháp điền dã và phương pháp thống kê",
+      "Phương pháp lịch sử và phương pháp logic",
+      "Phương pháp làm việc nhóm và phương pháp phỏng vấn"
+    ],
+    "answer": 2,
+    "explanation": "Giáo trình nêu khoa học lịch sử và chuyên ngành Lịch sử Đảng đều sử dụng hai phương pháp cơ bản: phương pháp lịch sử và phương pháp logic.",
+    "page": 25,
+    "chapter": 0
+  },
+  {
+    "id": "a-020",
+    "text": "Phương pháp nào chú ý tìm ra cái khác trước, cái không lặp lại để thấy những nét đặc thù lịch sử?",
+    "options": [
+      "Phương pháp logic",
+      "Phương pháp lịch sử",
+      "Phương pháp so sánh",
+      "Phương pháp tổng kết thực tiễn"
+    ],
+    "answer": 1,
+    "explanation": "Phương pháp lịch sử đi sâu vào tính muôn vẻ của lịch sử, chú ý tìm ra cái khác trước, cái không lặp lại để thấy nét đặc thù.",
+    "page": 26,
+    "chapter": 0
+  },
+  {
+    "id": "a-021",
+    "text": "Phương pháp nào đi sâu tìm hiểu cái bản chất, cái phổ biến, cái lặp lại của các hiện tượng lịch sử?",
+    "options": [
+      "Phương pháp lịch sử",
+      "Phương pháp so sánh",
+      "Phương pháp làm việc nhóm",
+      "Phương pháp logic"
+    ],
+    "answer": 3,
+    "explanation": "Phương pháp logic nghiên cứu hiện tượng lịch sử trong hình thức tổng quát, đi sâu tìm cái bản chất, phổ biến, lặp lại để vạch ra quy luật.",
+    "page": 27,
+    "chapter": 0
+  },
+  {
+    "id": "a-022",
+    "text": "Phương pháp lịch sử và phương pháp logic luôn gắn với nguyên tắc nào trong khoa học Lịch sử Đảng?",
+    "options": [
+      "Tính dân tộc và tính quốc tế",
+      "Tính kế thừa và tính sáng tạo",
+      "Tính khoa học và tính đảng",
+      "Tính toàn diện và tính cụ thể"
+    ],
+    "answer": 2,
+    "explanation": "Các phương pháp đó không tách rời mà luôn gắn với nguyên tắc tính khoa học và tính đảng trong khoa học lịch sử và chuyên ngành Lịch sử Đảng.",
+    "page": 28,
+    "chapter": 0
+  },
+  {
+    "id": "a-023",
+    "text": "Trong chương trình môn học, thời kỳ \"Đảng lãnh đạo hai cuộc kháng chiến giành độc lập hoàn toàn, thống nhất đất nước\" là giai đoạn nào?",
+    "options": [
+      "1945 - 1975",
+      "1930 - 1945",
+      "1954 - 1975",
+      "1975 - 1986"
+    ],
+    "answer": 0,
+    "explanation": "Môn học tập trung vào 3 thời kỳ: 1930 - 1945, 1945 - 1975 (hai cuộc kháng chiến, xây dựng CNXH ở miền Bắc) và từ năm 1975 đến nay.",
+    "page": 30,
+    "chapter": 0
+  },
+  {
+    "id": "a-024",
+    "text": "Đường lối đổi mới đất nước được hoạch định tại đại hội nào của Đảng?",
+    "options": [
+      "Đại hội V (3/1982)",
+      "Đại hội VI (12/1986)",
+      "Đại hội IV (12/1976)",
+      "Đại hội VII (6/1991)"
+    ],
+    "answer": 1,
+    "explanation": "Giáo trình yêu cầu nắm vững đường lối đổi mới được hoạch định tại Đại hội VI của Đảng (12/1986).",
+    "page": 32,
+    "chapter": 0
+  },
+  {
+    "id": "a-025",
+    "text": "Chủ tịch Hồ Chí Minh khẳng định lịch sử Đảng Cộng sản Việt Nam \"là cả một ...\". Cụm từ đúng là gì?",
+    "options": [
+      "bản anh hùng ca bất tử",
+      "pho lịch sử bằng vàng",
+      "trang sử vẻ vang nhất",
+      "kho tàng kinh nghiệm quý báu"
+    ],
+    "answer": 1,
+    "explanation": "Giáo trình dẫn lời Chủ tịch Hồ Chí Minh: lịch sử Đảng \"là cả một pho lịch sử bằng vàng\".",
+    "page": 33,
+    "chapter": 0
+  },
+  {
+    "id": "a-026",
+    "text": "Quốc tế Cộng sản do V.I. Lênin đứng đầu được thành lập vào thời gian nào?",
+    "options": [
+      "Tháng 11/1917",
+      "Tháng 7/1920",
+      "Tháng 12/1920",
+      "Tháng 3/1919"
+    ],
+    "answer": 3,
+    "explanation": "Tháng 3/1919, Quốc tế Cộng sản do V.I. Lênin đứng đầu được thành lập, trở thành bộ tham mưu chiến đấu của phong trào cách mạng vô sản thế giới.",
+    "page": 37,
+    "chapter": 1
+  },
+  {
+    "id": "a-027",
+    "text": "\"Sơ thảo lần thứ nhất những luận cương về vấn đề dân tộc và vấn đề thuộc địa\" được thông qua tại đâu?",
+    "options": [
+      "Đại hội V Quốc tế Cộng sản (1924)",
+      "Đại hội XVIII Đảng Xã hội Pháp (1920)",
+      "Đại hội II Quốc tế Cộng sản (1920)",
+      "Hội nghị Versailles (1919)"
+    ],
+    "answer": 2,
+    "explanation": "Đại hội II của Quốc tế Cộng sản (1920) đã thông qua bản Sơ thảo luận cương về vấn đề dân tộc và thuộc địa do V.I. Lênin khởi xướng.",
+    "page": 37,
+    "chapter": 1
+  },
+  {
+    "id": "a-028",
+    "text": "Ngày 1/9/1858, thực dân Pháp nổ súng tấn công địa điểm nào, mở đầu xâm lược Việt Nam?",
+    "options": [
+      "Đà Nẵng",
+      "Gia Định",
+      "Thuận An",
+      "Hà Nội"
+    ],
+    "answer": 0,
+    "explanation": "Sau quá trình điều tra thám sát lâu dài, ngày 1/9/1858, thực dân Pháp nổ súng tấn công Đà Nẵng, từng bước xâm lược Việt Nam.",
+    "page": 38,
+    "chapter": 1
+  },
+  {
+    "id": "a-029",
+    "text": "Với hiệp ước nào, triều đình nhà Nguyễn đầu hàng hoàn toàn thực dân Pháp?",
+    "options": [
+      "Hiệp ước Patơnốt (6/6/1884)",
+      "Hiệp ước năm 1862",
+      "Hiệp ước năm 1874",
+      "Hiệp ước năm 1883"
+    ],
+    "answer": 0,
+    "explanation": "Triều Nguyễn từng bước thỏa hiệp qua các Hiệp ước 1862, 1874, 1883 và đến ngày 6/6/1884 với Hiệp ước Patơnốt đã đầu hàng hoàn toàn thực dân Pháp.",
+    "page": 38,
+    "chapter": 1
+  },
+  {
+    "id": "a-030",
+    "text": "Cuộc khai thác thuộc địa lần thứ hai của thực dân Pháp ở Việt Nam diễn ra trong khoảng thời gian nào?",
+    "options": [
+      "1897 - 1914",
+      "1914 - 1918",
+      "1919 - 1929",
+      "1929 - 1933"
+    ],
+    "answer": 2,
+    "explanation": "Thực dân Pháp tiến hành hai cuộc khai thác thuộc địa lớn: lần thứ nhất (1897 - 1914) và lần thứ hai (1919 - 1929).",
+    "page": 39,
+    "chapter": 1
+  },
+  {
+    "id": "a-031",
+    "text": "Đến cuối năm 1929, số lượng công nhân Việt Nam là bao nhiêu?",
+    "options": [
+      "Khoảng 10 vạn người, chiếm 0,5% dân số",
+      "Hơn 22 vạn người, chiếm trên 1,2% dân số",
+      "Hơn 30 vạn người, chiếm trên 2% dân số",
+      "Khoảng 15 vạn người, chiếm 1% dân số"
+    ],
+    "answer": 1,
+    "explanation": "Theo chú thích của giáo trình, năm 1913 có khoảng 10 vạn công nhân; đến cuối năm 1929 có hơn 22 vạn người, chiếm trên 1,2% dân số.",
+    "page": 42,
+    "chapter": 1
+  },
+  {
+    "id": "a-032",
+    "text": "Vì sao tầng lớp tiểu tư sản Việt Nam không thể lãnh đạo cách mạng?",
+    "options": [
+      "Không có tinh thần dân tộc, yêu nước",
+      "Số lượng quá ít, chỉ tập trung ở nông thôn",
+      "Câu kết chặt chẽ với thực dân Pháp",
+      "Địa vị kinh tế bấp bênh, hay dao động, thiếu kiên định"
+    ],
+    "answer": 3,
+    "explanation": "Tiểu tư sản có tinh thần dân tộc, yêu nước nhưng do địa vị kinh tế bấp bênh, hay dao động, thiếu kiên định nên không thể lãnh đạo cách mạng.",
+    "page": 43,
+    "chapter": 1
+  },
+  {
+    "id": "a-033",
+    "text": "Cuối thế kỷ XIX, đầu thế kỷ XX, mâu thuẫn chủ yếu nhất trong xã hội Việt Nam là gì?",
+    "options": [
+      "Nông dân với giai cấp địa chủ phong kiến",
+      "Công nhân với giai cấp tư sản dân tộc",
+      "Tư sản dân tộc với tư sản mại bản",
+      "Toàn thể dân tộc Việt Nam với thực dân Pháp và phong kiến phản động"
+    ],
+    "answer": 3,
+    "explanation": "Trong các mâu thuẫn mới, mâu thuẫn giữa toàn thể dân tộc Việt Nam với thực dân Pháp và phong kiến phản động trở thành mâu thuẫn chủ yếu nhất.",
+    "page": 43,
+    "chapter": 1
+  },
+  {
+    "id": "a-034",
+    "text": "Tác phẩm \"Tuyên ngôn của Đảng Cộng sản\" được luật sư Phan Văn Trường công bố trên tờ báo nào năm 1926?",
+    "options": [
+      "La Cloche Fêlée",
+      "L'Humanité",
+      "Le Paria",
+      "Thanh niên"
+    ],
+    "answer": 0,
+    "explanation": "Phan Văn Trường công bố Tuyên ngôn của Đảng Cộng sản trên báo La Cloche Fêlée (số ra từ 29/3 đến 20/4/1926) tại Sài Gòn.",
+    "page": 44,
+    "chapter": 1
+  },
+  {
+    "id": "a-035",
+    "text": "Phong trào Cần Vương (1885 - 1896) do ai khởi xướng?",
+    "options": [
+      "Phan Đình Phùng và Cao Thắng",
+      "Hoàng Hoa Thám và Phan Bội Châu",
+      "Vua Hàm Nghi và Tôn Thất Thuyết",
+      "Vua Duy Tân và Trần Cao Vân"
+    ],
+    "answer": 2,
+    "explanation": "Phong trào Cần Vương do vua Hàm Nghi và Tôn Thất Thuyết khởi xướng (1885 - 1896), thể hiện tinh thần quật cường chống ngoại xâm.",
+    "page": 44,
+    "chapter": 1
+  },
+  {
+    "id": "a-036",
+    "text": "Phong trào nông dân Yên Thế (Bắc Giang) cuối thế kỷ XIX, đầu thế kỷ XX do ai lãnh đạo?",
+    "options": [
+      "Phan Đình Phùng",
+      "Hoàng Hoa Thám",
+      "Tôn Thất Thuyết",
+      "Nguyễn Thái Học"
+    ],
+    "answer": 1,
+    "explanation": "Phong trào nông dân Yên Thế nổ ra dưới sự lãnh đạo của Hoàng Hoa Thám, đấu tranh kiên cường gần 30 năm nhưng vẫn mang nặng \"cốt cách phong kiến\".",
+    "page": 45,
+    "chapter": 1
+  },
+  {
+    "id": "a-037",
+    "text": "Năm 1912, chịu ảnh hưởng của Cách mạng Tân Hợi, Phan Bội Châu lập tổ chức nào?",
+    "options": [
+      "Việt Nam Quang phục Hội",
+      "Việt Nam Quốc dân Đảng",
+      "Tân Việt Cách mạng Đảng",
+      "Tâm tâm xã"
+    ],
+    "answer": 0,
+    "explanation": "Sau khi phong trào Đông Du thất bại, năm 1912 Phan Bội Châu lập Việt Nam Quang phục Hội với tôn chỉ đánh đuổi Pháp, lập nước cộng hòa dân quốc.",
+    "page": 46,
+    "chapter": 1
+  },
+  {
+    "id": "a-038",
+    "text": "Chủ trương \"khai dân trí, chấn dân khí, hậu dân sinh\" gắn với nhà yêu nước nào?",
+    "options": [
+      "Phan Bội Châu",
+      "Huỳnh Thúc Kháng",
+      "Phan Châu Trinh",
+      "Lương Văn Can"
+    ],
+    "answer": 2,
+    "explanation": "Phan Châu Trinh theo xu hướng cải cách, cho rằng \"bất bạo động, bạo động tắc tử\", phải \"khai dân trí, chấn dân khí, hậu dân sinh\".",
+    "page": 46,
+    "chapter": 1
+  },
+  {
+    "id": "a-039",
+    "text": "Đỉnh cao của phong trào Duy Tân lan rộng khắp Trung Kỳ và Nam Kỳ là sự kiện nào?",
+    "options": [
+      "Khởi nghĩa Yên Bái (1930)",
+      "Vụ chống thuế ở Trung Kỳ (1908)",
+      "Phong trào Đông Du (1905 - 1908)",
+      "Khởi nghĩa Bãi Sậy ở Hưng Yên"
+    ],
+    "answer": 1,
+    "explanation": "Khi phong trào Duy Tân lan rộng, đỉnh cao là vụ chống thuế ở Trung Kỳ (1908) và bị thực dân Pháp đàn áp dã man.",
+    "page": 47,
+    "chapter": 1
+  },
+  {
+    "id": "a-040",
+    "text": "Việt Nam Quốc dân Đảng được chính thức thành lập vào thời gian nào?",
+    "options": [
+      "Tháng 6/1925",
+      "Tháng 2/1930",
+      "Tháng 6/1929",
+      "Tháng 12/1927"
+    ],
+    "answer": 3,
+    "explanation": "Trên cơ sở các tổ chức yêu nước của tiểu tư sản trí thức, Việt Nam Quốc dân Đảng do Nguyễn Thái Học lãnh đạo được thành lập tháng 12/1927 tại Bắc Kỳ.",
+    "page": 48,
+    "chapter": 1
+  },
+  {
+    "id": "a-041",
+    "text": "Theo giáo trình, nguyên nhân thất bại của các phong trào yêu nước trước khi có Đảng chủ yếu là do đâu?",
+    "options": [
+      "Nhân dân không ủng hộ các phong trào",
+      "Thiếu vũ khí và lương thực",
+      "Thiếu đường lối chính trị đúng đắn và tổ chức vững mạnh",
+      "Không có sự giúp đỡ của Nhật Bản"
+    ],
+    "answer": 2,
+    "explanation": "Các phong trào thất bại do thiếu đường lối chính trị đúng đắn, chưa có tổ chức vững mạnh để tập hợp, lãnh đạo toàn dân tộc, chưa có phương pháp đấu tranh thích hợp.",
+    "page": 49,
+    "chapter": 1
+  },
+  {
+    "id": "a-042",
+    "text": "Nguyễn Tất Thành quyết định ra đi tìm đường cứu nước vào năm nào?",
+    "options": [
+      "Năm 1908",
+      "Năm 1911",
+      "Năm 1917",
+      "Năm 1919"
+    ],
+    "answer": 1,
+    "explanation": "Với nhiệt huyết cứu nước và nhãn quan chính trị sắc bén, năm 1911 Nguyễn Tất Thành quyết định ra đi tìm đường cứu nước, giải phóng dân tộc.",
+    "page": 50,
+    "chapter": 1
+  },
+  {
+    "id": "a-043",
+    "text": "Bản \"Yêu sách của nhân dân An Nam\" do Nguyễn Ái Quốc gửi tới Hội nghị Versailles (18/6/1919) gồm bao nhiêu điểm?",
+    "options": [
+      "Tám điểm",
+      "Năm điểm",
+      "Mười điểm",
+      "Sáu điểm"
+    ],
+    "answer": 0,
+    "explanation": "Nguyễn Ái Quốc thay mặt Hội những người An Nam yêu nước ở Pháp gửi tới Hội nghị bản Yêu sách gồm tám điểm đòi quyền tự do cho nhân dân Việt Nam.",
+    "page": 50,
+    "chapter": 1
+  },
+  {
+    "id": "a-044",
+    "text": "Tháng 7/1920, Nguyễn Ái Quốc đọc Sơ thảo luận cương của V.I. Lênin đăng trên tờ báo nào?",
+    "options": [
+      "Le Paria (Người cùng khổ)",
+      "La Cloche Fêlée",
+      "Đời sống công nhân",
+      "L'Humanité (Nhân đạo)"
+    ],
+    "answer": 3,
+    "explanation": "Tháng 7/1920, Người đọc bản Sơ thảo lần thứ nhất những luận cương về vấn đề dân tộc và thuộc địa của Lênin đăng trên báo L'Humanité, số ra ngày 16 và 17/7/1920.",
+    "page": 51,
+    "chapter": 1
+  },
+  {
+    "id": "a-045",
+    "text": "Sự kiện nào đánh dấu Nguyễn Ái Quốc trở thành người cộng sản đầu tiên của Việt Nam?",
+    "options": [
+      "Bỏ phiếu tán thành Quốc tế III tại Đại hội Tua (12/1920)",
+      "Gửi Yêu sách tới Hội nghị Versailles (6/1919)",
+      "Tham gia Đảng Xã hội Pháp (đầu năm 1919)",
+      "Dự Đại hội V Quốc tế Cộng sản (1924)"
+    ],
+    "answer": 0,
+    "explanation": "Tại Đại hội XVIII Đảng Xã hội Pháp ở Tua (12/1920), Nguyễn Ái Quốc bỏ phiếu tán thành Quốc tế III, tham gia sáng lập Đảng Cộng sản Pháp, trở thành người cộng sản đầu tiên của Việt Nam.",
+    "page": 51,
+    "chapter": 1
+  },
+  {
+    "id": "a-046",
+    "text": "Trong \"Đường cách mệnh\", Nguyễn Ái Quốc ví đảng không có chủ nghĩa cũng giống như điều gì?",
+    "options": [
+      "Cây không có gốc, sông không có nguồn",
+      "Thuyền không có người cầm lái",
+      "Nhà không có móng, quân không có tướng",
+      "Người không có trí khôn, tàu không có bàn chỉ nam"
+    ],
+    "answer": 3,
+    "explanation": "Đường cách mệnh (1927) viết: \"Đảng mà không có chủ nghĩa cũng giống như người không có trí khôn, tàu không có bàn chỉ nam\".",
+    "page": 53,
+    "chapter": 1
+  },
+  {
+    "id": "a-047",
+    "text": "Theo Nguyễn Ái Quốc, lực lượng nào là \"gốc cách mệnh\"?",
+    "options": [
+      "Học trò, nhà buôn nhỏ",
+      "Công nông",
+      "Điền chủ nhỏ",
+      "Trí thức yêu nước"
+    ],
+    "answer": 1,
+    "explanation": "Nguyễn Ái Quốc chỉ rõ: \"công nông là gốc cách mệnh; còn học trò, nhà buôn nhỏ, điền chủ nhỏ... là bầu bạn cách mệnh của công nông\".",
+    "page": 54,
+    "chapter": 1
+  },
+  {
+    "id": "a-048",
+    "text": "Theo Nguyễn Ái Quốc, cách mạng giải phóng dân tộc ở thuộc địa có quan hệ thế nào với cách mạng vô sản ở \"chính quốc\"?",
+    "options": [
+      "Chỉ thành công sau cách mạng vô sản ở chính quốc",
+      "Hoàn toàn phụ thuộc vào cách mạng ở chính quốc",
+      "Có thể thành công trước cách mạng vô sản ở chính quốc",
+      "Không có liên hệ gì với cách mạng ở chính quốc"
+    ],
+    "answer": 2,
+    "explanation": "Nguyễn Ái Quốc xác định cách mạng giải phóng dân tộc ở thuộc địa không phụ thuộc vào cách mạng vô sản ở chính quốc mà có thể thành công trước, góp phần thúc đẩy cách mạng ở chính quốc.",
+    "page": 54,
+    "chapter": 1
+  },
+  {
+    "id": "a-049",
+    "text": "Phong trào \"Vô sản hóa\" do Kỳ bộ Bắc Kỳ Hội Việt Nam Cách mạng Thanh niên phát động bắt đầu từ thời gian nào?",
+    "options": [
+      "Ngày 29/9/1928",
+      "Ngày 21/6/1925",
+      "Ngày 17/6/1929",
+      "Ngày 3/2/1930"
+    ],
+    "answer": 0,
+    "explanation": "Phong trào \"Vô sản hóa\" phát động từ ngày 29/9/1928, góp phần truyền bá tư tưởng vô sản, rèn luyện cán bộ và phát triển tổ chức của công nhân.",
+    "page": 55,
+    "chapter": 1
+  },
+  {
+    "id": "a-050",
+    "text": "Hội Việt Nam Cách mạng Thanh niên được Nguyễn Ái Quốc thành lập vào thời gian và địa điểm nào?",
+    "options": [
+      "Tháng 2/1925 tại Hồng Kông",
+      "Tháng 6/1925 tại Thượng Hải",
+      "Tháng 11/1924 tại Quảng Châu",
+      "Tháng 6/1925 tại Quảng Châu"
+    ],
+    "answer": 3,
+    "explanation": "Tháng 6/1925, Nguyễn Ái Quốc thành lập Hội Việt Nam Cách mạng Thanh niên tại Quảng Châu (Trung Quốc), nòng cốt là Cộng sản đoàn.",
+    "page": 55,
+    "chapter": 1
+  },
+  {
+    "id": "a-051",
+    "text": "Hệ thống tổ chức của Hội Việt Nam Cách mạng Thanh niên gồm mấy cấp?",
+    "options": [
+      "3 cấp",
+      "4 cấp",
+      "5 cấp",
+      "6 cấp"
+    ],
+    "answer": 2,
+    "explanation": "Hội gồm 5 cấp: trung ương bộ, kỳ bộ, tỉnh bộ hay thành bộ, huyện bộ và chi bộ; Tổng bộ là cơ quan lãnh đạo cao nhất giữa hai kỳ đại hội.",
+    "page": 56,
+    "chapter": 1
+  },
+  {
+    "id": "a-052",
+    "text": "Tờ báo nào đánh dấu sự ra đời của báo chí cách mạng Việt Nam?",
+    "options": [
+      "Báo Búa liềm",
+      "Báo Thanh niên",
+      "Tạp chí Bônsơvích",
+      "Báo Le Paria"
+    ],
+    "answer": 1,
+    "explanation": "Báo Thanh niên do Nguyễn Ái Quốc sáng lập, số đầu tiên ra ngày 21/6/1925, đánh dấu sự ra đời của báo chí cách mạng Việt Nam.",
+    "page": 56,
+    "chapter": 1
+  },
+  {
+    "id": "a-053",
+    "text": "Cuốn sách chính trị đầu tiên của cách mạng Việt Nam, tập hợp bài giảng của Nguyễn Ái Quốc ở Quảng Châu, là cuốn nào?",
+    "options": [
+      "Bản án chế độ thực dân Pháp",
+      "Sơ thảo lịch sử phong trào cộng sản Đông Dương",
+      "Đường cách mệnh",
+      "Lịch sử nước ta"
+    ],
+    "answer": 2,
+    "explanation": "Các bài giảng của Nguyễn Ái Quốc được Hội Liên hiệp các dân tộc bị áp bức ở Á Đông xuất bản thành cuốn Đường cách mệnh - cuốn sách chính trị đầu tiên của cách mạng Việt Nam.",
+    "page": 57,
+    "chapter": 1
+  },
+  {
+    "id": "a-054",
+    "text": "Chi bộ cộng sản đầu tiên ở Việt Nam được thành lập tháng 3/1929 tại địa điểm nào?",
+    "options": [
+      "Số nhà 5D, phố Hàm Long, Hà Nội",
+      "Số nhà 312, phố Khâm Thiên, Hà Nội",
+      "Khánh Hội, Sài Gòn",
+      "Số nhà 13A đường Văn Minh, Quảng Châu"
+    ],
+    "answer": 0,
+    "explanation": "Tháng 3/1929, những người lãnh đạo Kỳ bộ Bắc Kỳ họp tại số nhà 5D, phố Hàm Long, Hà Nội, quyết định lập chi bộ cộng sản đầu tiên ở Việt Nam.",
+    "page": 59,
+    "chapter": 1
+  },
+  {
+    "id": "a-055",
+    "text": "Đông Dương Cộng sản Đảng (thành lập 17/6/1929) quyết định xuất bản tờ báo nào làm cơ quan ngôn luận?",
+    "options": [
+      "Tạp chí Bônsơvích",
+      "Báo Thanh niên",
+      "Báo Đỏ",
+      "Báo Búa liềm"
+    ],
+    "answer": 3,
+    "explanation": "Ngày 17/6/1929, tại số nhà 312 Khâm Thiên, Đông Dương Cộng sản Đảng được thành lập, lấy cờ đỏ búa liềm làm Đảng kỳ và xuất bản báo Búa liềm.",
+    "page": 59,
+    "chapter": 1
+  },
+  {
+    "id": "a-056",
+    "text": "An Nam Cộng sản Đảng được thành lập vào tháng 11/1929 tại đâu?",
+    "options": [
+      "Phố Khâm Thiên, Hà Nội",
+      "Khánh Hội, Sài Gòn",
+      "Cửu Long, Hồng Kông",
+      "Thành phố Vinh, Nghệ An"
+    ],
+    "answer": 1,
+    "explanation": "Tháng 11/1929, trên cơ sở các chi bộ cộng sản ở Nam Kỳ, An Nam Cộng sản Đảng được thành lập tại Khánh Hội, Sài Gòn, xuất bản Tạp chí Bônsơvích.",
+    "page": 59,
+    "chapter": 1
+  },
+  {
+    "id": "a-057",
+    "text": "Đông Dương Cộng sản Liên đoàn (9/1929) ra đời từ sự chuyển biến của tổ chức nào?",
+    "options": [
+      "Việt Nam Quốc dân Đảng",
+      "Tân Việt Cách mạng Đảng",
+      "Việt Nam Quang phục Hội",
+      "Kỳ bộ Nam Kỳ Hội Việt Nam Cách mạng Thanh niên"
+    ],
+    "answer": 1,
+    "explanation": "Tháng 9/1929, những người tiên tiến trong Tân Việt Cách mạng Đảng ra Tuyên đạt chính thức lập ra Đông Dương Cộng sản Liên đoàn.",
+    "page": 60,
+    "chapter": 1
+  },
+  {
+    "id": "a-058",
+    "text": "Hội nghị hợp nhất các tổ chức cộng sản thành Đảng Cộng sản Việt Nam được tiến hành ở đâu?",
+    "options": [
+      "Cửu Long (Hồng Kông, Trung Quốc)",
+      "Quảng Châu (Trung Quốc)",
+      "Thượng Hải (Trung Quốc)",
+      "Ma Cao (Trung Quốc)"
+    ],
+    "answer": 0,
+    "explanation": "Ngày 23/12/1929, Nguyễn Ái Quốc đến Hồng Kông triệu tập đại biểu hai đảng đến họp tại Cửu Long (Hồng Kông) để hợp nhất.",
+    "page": 61,
+    "chapter": 1
+  },
+  {
+    "id": "a-059",
+    "text": "Đại hội nào của Đảng quyết nghị lấy ngày 3/2 dương lịch hằng năm làm ngày kỷ niệm thành lập Đảng?",
+    "options": [
+      "Đại hội II (2/1951)",
+      "Đại hội I (3/1935)",
+      "Đại hội VI (12/1986)",
+      "Đại hội III (9/1960)"
+    ],
+    "answer": 3,
+    "explanation": "Theo chú thích của giáo trình, Đại hội đại biểu toàn quốc lần thứ III của Đảng (9/1960) quyết nghị lấy ngày 3/2 hằng năm làm ngày kỷ niệm thành lập Đảng.",
+    "page": 61,
+    "chapter": 1
+  },
+  {
+    "id": "a-060",
+    "text": "Hai đại biểu của An Nam Cộng sản Đảng dự Hội nghị thành lập Đảng là ai?",
+    "options": [
+      "Trịnh Đình Cửu và Nguyễn Đức Cảnh",
+      "Trần Phú và Nguyễn Thị Minh Khai",
+      "Châu Văn Liêm và Nguyễn Thiệu",
+      "Ngô Gia Tự và Trần Văn Cung"
+    ],
+    "answer": 2,
+    "explanation": "Hội nghị gồm 2 đại biểu Đông Dương Cộng sản Đảng (Trịnh Đình Cửu, Nguyễn Đức Cảnh) và 2 đại biểu An Nam Cộng sản Đảng (Châu Văn Liêm, Nguyễn Thiệu).",
+    "page": 62,
+    "chapter": 1
+  },
+  {
+    "id": "a-061",
+    "text": "Trong năm điểm lớn do Nguyễn Ái Quốc nêu ra tại Hội nghị thành lập Đảng, tên Đảng được định là gì?",
+    "options": [
+      "Đông Dương Cộng sản Đảng",
+      "Đảng Cộng sản Việt Nam",
+      "Đảng Cộng sản Đông Dương",
+      "An Nam Cộng sản Đảng"
+    ],
+    "answer": 1,
+    "explanation": "Điểm thứ hai trong năm điểm lớn Nguyễn Ái Quốc nêu ra là: \"Định tên Đảng là Đảng Cộng sản Việt Nam\".",
+    "page": 62,
+    "chapter": 1
+  },
+  {
+    "id": "a-062",
+    "text": "Ngày 24/2/1930, Lâm thời chấp ủy Đảng Cộng sản Việt Nam ra Quyết nghị chấp nhận tổ chức nào gia nhập Đảng?",
+    "options": [
+      "Tân Việt Cách mạng Đảng",
+      "An Nam Cộng sản Đảng",
+      "Việt Nam Quốc dân Đảng",
+      "Đông Dương Cộng sản Liên đoàn"
+    ],
+    "answer": 3,
+    "explanation": "Đến ngày 24/2/1930, việc thống nhất hoàn thành với Quyết nghị chấp nhận Đông Dương Cộng sản Liên đoàn gia nhập Đảng Cộng sản Việt Nam.",
+    "page": 63,
+    "chapter": 1
+  },
+  {
+    "id": "a-063",
+    "text": "Hai văn kiện nào hợp thành Cương lĩnh chính trị đầu tiên của Đảng Cộng sản Việt Nam?",
+    "options": [
+      "Chương trình tóm tắt và Điều lệ vắn tắt",
+      "Chánh cương vắn tắt và Điều lệ vắn tắt",
+      "Chánh cương vắn tắt và Sách lược vắn tắt",
+      "Luận cương chính trị và Sách lược vắn tắt"
+    ],
+    "answer": 2,
+    "explanation": "Trong các văn kiện được thông qua, Chánh cương vắn tắt của Đảng và Sách lược vắn tắt của Đảng là Cương lĩnh chính trị đầu tiên của Đảng.",
+    "page": 64,
+    "chapter": 1
+  },
+  {
+    "id": "a-064",
+    "text": "Cương lĩnh chính trị đầu tiên xác định đường lối chiến lược của cách mạng Việt Nam là gì?",
+    "options": [
+      "Tư sản dân quyền và thổ địa cách mạng, đi tới xã hội cộng sản",
+      "Làm cách mạng xã hội chủ nghĩa ngay, bỏ qua tư sản dân quyền",
+      "Làm cách mạng thổ địa trước, giải phóng dân tộc sau",
+      "Làm cách mạng dân chủ tư sản kiểu cũ"
+    ],
+    "answer": 0,
+    "explanation": "Cương lĩnh xác định đường lối chiến lược: \"chủ trương làm tư sản dân quyền c.m và thổ địa c.m để đi tới xã hội cộng sản\".",
+    "page": 64,
+    "chapter": 1
+  },
+  {
+    "id": "a-065",
+    "text": "Trong Cương lĩnh chính trị đầu tiên, nhiệm vụ nào được đặt ở vị trí hàng đầu?",
+    "options": [
+      "Chống phong kiến, giành ruộng đất cho dân cày",
+      "Thực hiện luật ngày làm tám giờ",
+      "Chống đế quốc, giành độc lập cho dân tộc",
+      "Phổ thông giáo dục theo công nông hóa"
+    ],
+    "answer": 2,
+    "explanation": "Chống đế quốc và chống phong kiến là nhiệm vụ cơ bản, trong đó chống đế quốc, giành độc lập cho dân tộc được đặt ở vị trí hàng đầu.",
+    "page": 65,
+    "chapter": 1
+  },
+  {
+    "id": "a-066",
+    "text": "Nội dung nào dưới đây thuộc phương diện xã hội trong Cương lĩnh chính trị đầu tiên?",
+    "options": [
+      "Thủ tiêu hết các thứ quốc trái",
+      "Nam nữ bình quyền",
+      "Thi hành luật ngày làm tám giờ",
+      "Bỏ sưu thuế cho dân cày nghèo"
+    ],
+    "answer": 1,
+    "explanation": "Về phương diện xã hội, Cương lĩnh xác định: dân chúng được tự do tổ chức; nam nữ bình quyền; phổ thông giáo dục theo công nông hóa.",
+    "page": 65,
+    "chapter": 1
+  },
+  {
+    "id": "a-067",
+    "text": "Theo Cương lĩnh chính trị đầu tiên, lực lượng cơ bản của cách mạng là gì?",
+    "options": [
+      "Tiểu tư sản, trí thức và trung nông",
+      "Tư sản dân tộc và tiểu địa chủ",
+      "Nông dân, trong đó trí thức lãnh đạo",
+      "Công nhân và nông dân, trong đó giai cấp công nhân lãnh đạo"
+    ],
+    "answer": 3,
+    "explanation": "Cương lĩnh xác định phải đoàn kết công nhân, nông dân - đây là lực lượng cơ bản, trong đó giai cấp công nhân lãnh đạo.",
+    "page": 66,
+    "chapter": 1
+  },
+  {
+    "id": "a-068",
+    "text": "Về phương pháp tiến hành cách mạng giải phóng dân tộc, Cương lĩnh chính trị đầu tiên khẳng định con đường nào?",
+    "options": [
+      "Bạo lực cách mạng của quần chúng",
+      "Cải cách ôn hòa, dựa vào Pháp",
+      "Ám sát cá nhân, bạo động manh động",
+      "Đấu tranh nghị trường hợp pháp"
+    ],
+    "answer": 0,
+    "explanation": "Cương lĩnh khẳng định phải bằng con đường bạo lực cách mạng của quần chúng, \"không khi nào nhượng một chút lợi ích gì của công nông mà đi vào đường thỏa hiệp\".",
+    "page": 66,
+    "chapter": 1
+  },
+  {
+    "id": "a-069",
+    "text": "Ý nghĩa đầu tiên được giáo trình nêu về sự ra đời của Đảng Cộng sản Việt Nam là gì?",
+    "options": [
+      "Giành chính quyền về tay nhân dân",
+      "Xóa bỏ hoàn toàn chế độ phong kiến",
+      "Chấm dứt sự khủng hoảng về đường lối cứu nước",
+      "Đánh đuổi thực dân Pháp khỏi Đông Dương"
+    ],
+    "answer": 2,
+    "explanation": "Đảng Cộng sản Việt Nam ra đời đã chấm dứt sự khủng hoảng về đường lối cứu nước, đưa cách mạng Việt Nam sang một bước ngoặt lịch sử vĩ đại.",
+    "page": 68,
+    "chapter": 1
+  },
+  {
+    "id": "a-070",
+    "text": "Chủ tịch Hồ Chí Minh khẳng định việc thành lập Đảng chứng tỏ điều gì?",
+    "options": [
+      "Giai cấp nông dân đã trở thành lực lượng lãnh đạo",
+      "Giai cấp vô sản ta đã trưởng thành, đủ sức lãnh đạo cách mạng",
+      "Cách mạng Việt Nam đã giành thắng lợi hoàn toàn",
+      "Giai cấp tư sản dân tộc đã giác ngộ cách mạng"
+    ],
+    "answer": 1,
+    "explanation": "Hồ Chí Minh viết: việc thành lập Đảng là bước ngoặt vô cùng quan trọng, \"chứng tỏ rằng giai cấp vô sản ta đã trưởng thành và đủ sức lãnh đạo cách mạng\".",
+    "page": 69,
+    "chapter": 1
+  }
+]
