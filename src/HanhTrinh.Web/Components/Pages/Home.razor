@@ -1,15 +1,21 @@
 ﻿@page "/"
 
-<div class="page center">
+<div class="page center home">
+    <Decor Kind="drum" />
     <div class="hero">
-        <div class="hero-star">★</div>
-        <h1>Hành trình Lịch sử Đảng</h1>
-        <p class="sub">Đi khắp 63 tỉnh thành từ Hà Giang đến Cà Mau — trả lời đúng để tiến bước</p>
+        <div class="flags"><Decor Kind="flag" Size="44" /><Decor Kind="party" Size="44" /></div>
+        <h1>Hành trình<br /><span>Lịch sử Đảng</span></h1>
         <div class="menu">
             <a class="btn big primary" href="/choi">▶ Chơi</a>
-            <a class="btn big" href="/xep-hang">🏆 Xếp hạng</a>
-            <a class="btn big" href="/luat-choi">📜 Luật chơi</a>
+            <a class="btn big gold" href="/xep-hang">🏆 Xếp hạng</a>
+            <a class="btn big gold" href="/luat-choi">📜 Luật chơi</a>
         </div>
-        <p class="tiny">Câu hỏi soạn theo Giáo trình Lịch sử Đảng Cộng sản Việt Nam (NXB CTQG Sự thật, 2021)</p>
+        <div class="timeline">
+            <span><b>1930</b>Thành lập Đảng</span>
+            <span><b>1945</b>Cách mạng Tháng Tám</span>
+            <span><b>1954</b>Điện Biên Phủ</span>
+            <span><b>1975</b>Thống nhất đất nước</span>
+            <span><b>1986</b>Đổi mới</span>
+        </div>
     </div>
 </div>

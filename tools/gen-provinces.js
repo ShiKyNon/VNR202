@@ -22,6 +22,7 @@ const P = [
 ];
 const VEN = ['Quảng Ninh','Hải Phòng','Thái Bình','Nam Định','Ninh Bình','Thanh Hóa','Nghệ An','Hà Tĩnh','Quảng Bình','Quảng Trị','Thừa Thiên Huế','Đà Nẵng','Quảng Nam','Quảng Ngãi','Bình Định','Phú Yên','Khánh Hòa','Ninh Thuận','Bình Thuận','Bà Rịa – Vũng Tàu','TP. Hồ Chí Minh','Tiền Giang','Bến Tre','Trà Vinh','Sóc Trăng','Bạc Liêu','Cà Mau','Kiên Giang'];
 const NUI = ['Hà Giang','Cao Bằng','Bắc Kạn','Lạng Sơn','Tuyên Quang','Thái Nguyên','Phú Thọ','Bắc Giang','Lào Cai','Yên Bái','Lai Châu','Điện Biên','Sơn La','Hòa Bình'];
+const ZONES = {TayBac:['Lai Châu','Điện Biên','Sơn La','Hòa Bình','Lào Cai','Yên Bái'],DongBac:['Hà Giang','Cao Bằng','Bắc Kạn','Lạng Sơn','Tuyên Quang','Thái Nguyên','Phú Thọ','Bắc Giang','Quảng Ninh'],DongBangSongHong:['Hà Nội','Vĩnh Phúc','Bắc Ninh','Hải Dương','Hải Phòng','Hưng Yên','Thái Bình','Hà Nam','Nam Định','Ninh Bình'],BacTrungBo:['Thanh Hóa','Nghệ An','Hà Tĩnh','Quảng Bình','Quảng Trị','Thừa Thiên Huế'],NamTrungBo:['Đà Nẵng','Quảng Nam','Quảng Ngãi','Bình Định','Phú Yên','Khánh Hòa','Ninh Thuận','Bình Thuận'],BienDao:['Hoàng Sa','Trường Sa'],TayNguyen:['Kon Tum','Gia Lai','Đắk Lắk','Đắk Nông','Lâm Đồng'],DongNamBo:['Bình Phước','Tây Ninh','Bình Dương','Đồng Nai','Bà Rịa – Vũng Tàu','TP. Hồ Chí Minh'],TayNamBo:['Long An','Tiền Giang','Bến Tre','Trà Vinh','Vĩnh Long','Đồng Tháp','An Giang','Kiên Giang','Cần Thơ','Hậu Giang','Sóc Trăng','Bạc Liêu','Cà Mau']};
 const BTB = ['Thanh Hóa','Nghệ An','Hà Tĩnh','Quảng Bình','Quảng Trị','Thừa Thiên Huế'];
 const pts = P.map(([n,s,r,lat,lon]) => ({n,s,r,x:(lon-102)*110,y:(23.6-lat)*105, ox:(lon-102)*110, oy:(23.6-lat)*105, fixed: n==='Hoàng Sa'||n==='Trường Sa'}));
 const MIN = 76;
@@ -32,8 +33,23 @@ for (let it=0; it<2000; it++) {
   }
   for (const p of pts) if(!p.fixed){ p.x += (p.ox-p.x)*0.004; p.y += (p.oy-p.y)*0.004; }
 }
-const out = pts.map(p => ({name:p.n, ...(p.s?{short:p.s}:{}), region:p.r,
+const out = pts.map(p => ({name:p.n, ...(p.s?{short:p.s}:{}), region:p.r, zone:Object.keys(ZONES).find(z=>ZONES[z].includes(p.n)),
   tags:[...(VEN.includes(p.n)?['VenBien']:[]),...(p.fixed?['Dao']:[]),...(NUI.includes(p.n)?['MienNuiPhiaBac']:[]),...(BTB.includes(p.n)?['BacTrungBo']:[])],
   x:Math.round(p.x), y:Math.round(p.y)}));
+// Đặt nhãn: thử 4 phía, chọn chỗ ít đè lên ô/nhãn khác nhất.
+const boxes=[]; const R=22;
+const hit=(a,b)=>!(a.x2<b.x1||b.x2<a.x1||a.y2<b.y1||b.y2<a.y1);
+for (const o of out) {
+  const label=(o.short||o.name), w=label.length*10.5+6, h=22;
+  const cands=[['start',o.x+R+4,o.y+6],['end',o.x-R-4,o.y+6],['middle',o.x,o.y-R-8],['middle',o.x,o.y+R+20]];
+  let best=null,bs=1e9;
+  for (const [a,lx,ly] of cands){
+    const x1=a==='start'?lx:a==='end'?lx-w:lx-w/2; const b={x1,x2:x1+w,y1:ly-h+4,y2:ly+4};
+    let sc=boxes.filter(q=>hit(q,b)).length*10 + out.filter(t=>t!==o&&hit({x1:t.x-R,x2:t.x+R,y1:t.y-R,y2:t.y+R},b)).length*6;
+    if (o.tags.includes('Dao')) sc += a==='start'?0:50;
+    if (sc<bs){bs=sc;best={a,lx,ly,b};}
+  }
+  boxes.push(best.b); o.anchor=best.a; o.lx=Math.round(best.lx); o.ly=Math.round(best.ly);
+}
 fs.writeFileSync(process.argv[2], JSON.stringify(out, null, 1));
 console.log(out.length, Math.min(...out.map(o=>o.x)), Math.max(...out.map(o=>o.x)), Math.min(...out.map(o=>o.y)), Math.max(...out.map(o=>o.y)));

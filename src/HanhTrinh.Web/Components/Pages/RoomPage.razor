@@ -20,7 +20,6 @@ else if (_vm.Status == RoomStatus.Lobby && _vm.MyIcon is null || _changingIcon &
     <div class="page"><div class="card wide">
         <BackButton OnClick="LeaveLobby" />
         <h2>Chọn biểu tượng của bạn</h2>
-        <p class="muted">Biểu tượng đã có người chọn sẽ bị tô xám.</p>
         @if (_error is not null) { <p class="error">@_error</p> }
         <div class="icon-grid">
             @foreach (var icon in Rooms.Content.Icons)
@@ -94,86 +93,119 @@ else if (_vm.Game is { } g)
     var me = g.Me;
     <div class="game">
         <div class="map-area">
-            <div class="map-top">
+            <div class="map-bar">
                 <BackButton OnClick="LeaveMatch" />
                 <span class="season-pill @SeasonCatalog.Get(g.Season).Css">@SeasonCatalog.Get(g.Season).Emoji @SeasonCatalog.Get(g.Season).Title</span>
+                @{ var shownTile = _anim == Anim.None ? me.Tile : _animTile; }
+                <span class="where-pill">📍 @_tileName(shownTile) <small>(ô @shownTile/65)</small></span>
+                <span class="spacer"></span>
+                @if (me.Phase == Phase.Question && me.Question is not null && _anim == Anim.None)
+                {
+                    <button class="btn small @(QuestionHidden ? "primary pulse" : "")" @onclick="ToggleQuestion">@(QuestionHidden ? "❓ Hiện câu hỏi" : "🙈 Ẩn câu hỏi")</button>
+                }
+                <button class="btn small" @onclick="ToggleZoom">@(_zoomed ? "🗺️ Toàn cảnh" : "🔍 Phóng to")</button>
             </div>
-            <BoardMap Game="g" MyToken="@_token" MyAnimTile="_anim == Anim.None ? null : _animTile" />
-
-            @if (_anim != Anim.None)
-            {
-                <div class="popup dice-pop">
-                    <div class="dice @(_anim == Anim.Rolling ? "spin" : "")">@DiceFace(_diceFace)</div>
-                    @if (_anim != Anim.Rolling && _roll is not null)
-                    {
-                        <div class="formula">@_roll.Formula @(_roll.Formula.Contains('=') ? "" : "bước")</div>
-                    }
+            <div class="map-stage">
+                <div class="map-scroll @(_zoomed ? "zoomed" : "")">
+                    <BoardMap Game="g" MyToken="@_token" MyAnimTile="_anim == Anim.None ? null : _animTile"
+                              Target="@(_anim is Anim.Moving or Anim.Arrived ? _roll?.To : null)" HopKey="_animTile" />
                 </div>
-            }
-            else if (me.Phase == Phase.Question && me.Question is { } q)
-            {
-                <div class="popup question @(q.Bonus ? "bonus" : "")">
-                    <div class="q-head">
-                        <span>@(q.Bonus ? "✨ Câu lịch sử · " : "")📍 @me.TileName</span>
-                        @if (q.DeadlineLeft is { } dl) { <span class="deadline">⏳ @Math.Ceiling(dl)s</span> }
-                        @if (me.PheBinhActive) { <span class="chip buff">🪞 được chọn lại 1 lần</span> }
-                    </div>
-                    <div class="q-text">@q.Text</div>
-                    <div class="options">
-                        @for (var i = 0; i < q.Options.Count; i++)
+
+                @if (_anim is Anim.Rolling or Anim.Showing)
+                {
+                    <div class="popup dice-pop">
+                        <div class="cube-wrap">
+                            <div class="cube @(_anim == Anim.Rolling ? "rolling" : $"show-{_roll?.Raw}")">
+                                @for (var f = 1; f <= 6; f++)
+                                {
+                                    <div class="face f@(f)">@for (var c = 1; c <= 9; c++) { <span class="@(Pips[f].Contains(c) ? "pip" : "")"></span> }</div>
+                                }
+                            </div>
+                        </div>
+                        @if (_anim == Anim.Showing && _roll is not null)
                         {
-                            var idx = i;
-                            var opt = q.Options[i];
-                            <button class="opt" disabled="@(opt is null || _busy)" @onclick="() => Answer(idx)">
-                                <b>@("ABCD"[i])</b> @(opt ?? "—")
-                            </button>
+                            <div class="formula">@(_roll.Formula.Contains('=') ? _roll.Formula : $"{_roll.Raw}") <span class="steps">→ đi @_roll.Steps bước</span></div>
+                        }
+                        else
+                        {
+                            <div class="formula muted">Đang gieo xúc xắc…</div>
                         }
                     </div>
-                    @if (me.Pending.Contains(EffectKind.NamQuyenChuDong))
-                    {
-                        <div class="choose">🎯 Nắm quyền chủ động — chọn số bước:
-                            @for (var n = 1; n <= 6; n++) { var v = n; <button class="btn small @(_chosen == v ? "primary" : "")" @onclick="() => _chosen = v">@v</button> }
+                }
+                else if (_anim is Anim.Moving or Anim.Arrived)
+                {
+                    <div class="moving-pill">🚶 Đang đi: @_tileName(_animTile) → @_tileName(_roll!.To)</div>
+                }
+                else if (me.Phase == Phase.Question && me.Question is { } q && !QuestionHidden)
+                {
+                    <div class="popup question @(q.Bonus ? "bonus" : "")">
+                        <div class="q-head">
+                            <span>@(q.Bonus ? "✨ Câu lịch sử · " : "")📍 @me.TileName</span>
+                            <span class="row gap">
+                                @if (q.DeadlineLeft is { } dl) { <span class="deadline">⏳ @Math.Ceiling(dl)s</span> }
+                                @if (me.PheBinhActive) { <span class="chip buff">🪞 được chọn lại 1 lần</span> }
+                                <button class="btn tiny" title="Ẩn để xem bản đồ" @onclick="ToggleQuestion">🙈 Ẩn</button>
+                            </span>
                         </div>
-                    }
-                    @if (me.Bag.Count > 0)
-                    {
-                        <div class="bag">🎒
-                            @foreach (var k in me.Bag.Distinct())
+                        <div class="q-text">@q.Text</div>
+                        <div class="options">
+                            @for (var i = 0; i < q.Options.Count; i++)
                             {
-                                var e = EffectCatalog.Get(k);
-                                var kk = k;
-                                <button class="btn small buffbtn" title="@e.Description" disabled="@(_busy || q.Bonus && k == EffectKind.DoiMoi)" @onclick="() => UseBag(kk)">@e.Icon @e.Name</button>
+                                var idx = i;
+                                var opt = q.Options[i];
+                                <button class="opt opt@(i)" disabled="@(opt is null || _busy)" @onclick="() => Answer(idx)">
+                                    <b>@("ABCD"[i])</b> @(opt ?? "—")
+                                </button>
                             }
                         </div>
-                    }
-                </div>
-            }
-            else if (me.Phase == Phase.Cooldown && me.LastWrong is { } w)
-            {
-                <div class="popup wrong">
-                    <div class="q-head"><span>✘ Chưa đúng rồi!</span><span class="deadline">⏳ @Math.Ceiling(me.PhaseLeft)s</span></div>
-                    <div class="q-text">@w.Text</div>
-                    <ul class="answers">
-                        @for (var o = 0; o < w.Options.Length; o++)
+                        @if (me.Pending.Contains(EffectKind.NamQuyenChuDong))
                         {
-                            <li class="@(o == w.Answer ? "correct" : o == w.Chosen ? "chosen" : "")">@w.Options[o]</li>
+                            <div class="choose">🎯 <b>Nắm quyền chủ động</b> — chọn số bước:
+                                @for (var n = 1; n <= 6; n++) { var v = n; <button class="btn small @(_chosen == v ? "primary" : "")" @onclick="() => _chosen = v">@v</button> }
+                            </div>
                         }
-                    </ul>
-                    <p class="expl">💡 @w.Explanation <i>(Giáo trình, tr.@w.Page)</i></p>
-                </div>
-            }
-            else if (me.Phase == Phase.Delay)
-            {
-                <div class="popup small-pop">⏳ @(g.Season == Season.Thu ? "Đang trú bão / " : "")Câu hỏi sắp hiện… @Math.Ceiling(me.PhaseLeft)s</div>
-            }
-            else if (me.Phase == Phase.Finished)
-            {
-                <div class="popup small-pop">🏁 Bạn đã về đích Cà Mau sau <b>@RoomVmBuilder.Clock(me.FinishTime ?? TimeSpan.Zero)</b>!<br /><span class="muted">Chờ các bạn khác…</span></div>
-            }
-            @if (_toast is not null)
-            {
-                <div class="toast">@_toast</div>
-            }
+                        @if (me.Bag.Count > 0)
+                        {
+                            <div class="bag"><span class="bag-title">🎒 Dùng buff:</span>
+                                @foreach (var k in me.Bag.Distinct())
+                                {
+                                    var e = EffectCatalog.Get(k);
+                                    var kk = k;
+                                    <button class="buffbtn" title="@e.Description" disabled="@(_busy || q.Bonus && k == EffectKind.DoiMoi)" @onclick="() => UseBag(kk)">
+                                        <span class="bi">@e.Icon</span><span><b>@e.Name</b><small>@e.Description</small></span>
+                                    </button>
+                                }
+                            </div>
+                        }
+                    </div>
+                }
+                else if (me.Phase == Phase.Cooldown && me.LastWrong is { } w)
+                {
+                    <div class="popup wrong">
+                        <div class="q-head"><span>✘ Chưa đúng rồi!</span><span class="deadline">⏳ @Math.Ceiling(me.PhaseLeft)s</span></div>
+                        <div class="q-text">@w.Text</div>
+                        <ul class="answers">
+                            @for (var o = 0; o < w.Options.Length; o++)
+                            {
+                                <li class="@(o == w.Answer ? "correct" : o == w.Chosen ? "chosen" : "")">@w.Options[o]</li>
+                            }
+                        </ul>
+                        <p class="expl">💡 @w.Explanation <i>(Giáo trình, tr.@w.Page)</i></p>
+                    </div>
+                }
+                else if (me.Phase == Phase.Delay)
+                {
+                    <div class="popup small-pop">⏳ @(g.Season == Season.Thu ? "Đang trú bão… " : "Câu hỏi sắp hiện… ")@Math.Ceiling(me.PhaseLeft)s</div>
+                }
+                else if (me.Phase == Phase.Finished)
+                {
+                    <div class="popup small-pop">🏁 Bạn đã về đích Cà Mau sau <b>@RoomVmBuilder.Clock(me.FinishTime ?? TimeSpan.Zero)</b>!<br /><span class="muted">Chờ các bạn khác…</span></div>
+                }
+                @if (_toast is not null)
+                {
+                    <div class="toast">@_toast</div>
+                }
+            </div>
         </div>
         <SidePanel Game="g" MyToken="@_token" />
     </div>
@@ -182,7 +214,19 @@ else if (_vm.Game is { } g)
 @code {
     [Parameter] public string Code { get; set; } = "";
 
-    private enum Anim { None, Rolling, Showing, Moving }
+    private enum Anim { None, Rolling, Showing, Moving, Arrived }
+
+    // Nhịp hoạt ảnh (ms). Server cộng bù tương ứng cho debuff 10 giây (Match.AnimationGrace).
+    private const int RollMs = 1800, ShowMs = 1600, StepMs = 520, ArriveMs = 800;
+    private static readonly int[][] Pips = [[], [5], [1, 9], [1, 5, 9], [1, 3, 7, 9], [1, 3, 5, 7, 9], [1, 3, 4, 6, 7, 9]];
+    private bool _zoomed = true;
+    private string? _hiddenQid;
+    private int _followed = -1;
+    private List<string>? _pendingToast;
+    private bool QuestionHidden => _hiddenQid is not null && _hiddenQid == _vm?.Game?.Me.Question?.Id;
+    private string _tileName(int i) => Rooms.Content.Tile(Math.Clamp(i, 1, 65)).Name;
+    private void ToggleQuestion() => _hiddenQid = QuestionHidden ? null : _vm?.Game?.Me.Question?.Id;
+    private void ToggleZoom() { _zoomed = !_zoomed; _followed = -1; }
 
     private Room? _room;
     private string? _token;
@@ -209,7 +253,18 @@ else if (_vm.Game is { } g)
 
     protected override async Task OnAfterRenderAsync(bool first)
     {
-        if (!first) return;
+        if (!first)
+        {
+            // Camera bám theo quân của mình khi đang phóng to.
+            var shown = _anim == Anim.None ? _vm?.Game?.Me.Tile ?? -1 : _animTile;
+            if (_zoomed && _vm?.Game is not null && _results is null && shown != _followed)
+            {
+                var smooth = _followed != -1;
+                _followed = shown;
+                try { await JS.InvokeVoidAsync("htFollow", smooth); } catch (JSDisconnectedException) { }
+            }
+            return;
+        }
         _token = await Session.EnsureAsync();
         _room = Rooms.FindByToken(_token);
         if (_room is null || _room.Code != Code) { Nav.NavigateTo("/phong"); return; }
@@ -257,7 +312,7 @@ else if (_vm.Game is { } g)
             _roll = roll;
             _anim = Anim.Rolling;
             _animTile = roll.From;
-            _animNext = DateTime.UtcNow.AddMilliseconds(900);
+            _animNext = DateTime.UtcNow.AddMilliseconds(RollMs);
         }
         StateHasChanged();
     }
@@ -269,14 +324,17 @@ else if (_vm.Game is { } g)
         switch (_anim)
         {
             case Anim.Rolling:
-                _diceFace = Random.Shared.Next(1, 7);
-                if (now >= _animNext) { _diceFace = _roll!.Raw; _anim = Anim.Showing; _animNext = now.AddMilliseconds(1100); }
+                if (now >= _animNext) { _anim = Anim.Showing; _animNext = now.AddMilliseconds(ShowMs); }
                 break;
             case Anim.Showing when now >= _animNext:
                 _anim = Anim.Moving; _animNext = now; break;
             case Anim.Moving when now >= _animNext:
-                if (_animTile >= _roll!.To) _anim = Anim.None;
-                else { _animTile++; _animNext = now.AddMilliseconds(160); }
+                if (_animTile >= _roll!.To) { _anim = Anim.Arrived; _animNext = now.AddMilliseconds(ArriveMs); }
+                else { _animTile++; _animNext = now.AddMilliseconds(StepMs); }
+                break;
+            case Anim.Arrived when now >= _animNext:
+                _anim = Anim.None;
+                if (_pendingToast is { } pt) { _pendingToast = null; Toast(pt); }
                 break;
         }
         var since = now - _lastRefresh;
@@ -285,7 +343,6 @@ else if (_vm.Game is { } g)
         else if (_anim != Anim.None || _toast is not null || _dirty) StateHasChanged();
     }
 
-    private static string DiceFace(int n) => n switch { 1 => "⚀", 2 => "⚁", 3 => "⚂", 4 => "⚃", 5 => "⚄", _ => "⚅" };
     private static string SeasonName(Season s) => s switch { Season.Xuan => "Xuân", Season.Ha => "Hạ", Season.Thu => "Thu", _ => "Đông" };
 
     private void Toast(IEnumerable<string> lines)
@@ -304,7 +361,8 @@ else if (_vm.Game is { } g)
         _busy = false;
         if (!o.Accepted) return;
         _chosen = null;
-        Toast(o.Correct && o.Roll is null ? o.Events.Prepend("✔ Chính xác!") : o.Events);
+        if (o.Roll is null) Toast(o.Correct ? o.Events.Prepend("✔ Chính xác!") : o.Events);
+        else _pendingToast = o.Events.ToList(); // hiện sau khi quân cờ đi tới nơi
         _room.RaiseChanged();
         Refresh();
     }

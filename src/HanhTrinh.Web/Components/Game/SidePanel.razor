@@ -1,18 +1,18 @@
 <aside class="side">
-    <section class="box">
-        <div class="row between">
-            <h3>🏆 Bảng xếp hạng</h3>
+    <section class="box rankbox">
+        <div class="box-head red">
+            <span>🏆 Bảng xếp hạng</span>
             <span class="clock">⏱ @RoomVmBuilder.Clock(Game.Elapsed)</span>
         </div>
         @if (Game.GraceLeft is { } g)
         {
-            <div class="grace">🏁 Có người về đích! Trận kết thúc sau <b>@RoomVmBuilder.Clock(g < TimeSpan.Zero ? TimeSpan.Zero : g)</b></div>
+            <div class="grace">🏁 Đã có người về đích! Kết thúc sau <b>@RoomVmBuilder.Clock(g < TimeSpan.Zero ? TimeSpan.Zero : g)</b></div>
         }
         <ol class="rank @(_all ? "all" : "")">
             @foreach (var r in _all ? Game.Ranking : Game.Ranking.Take(5))
             {
-                <li class="@(r.Token == MyToken ? "me" : "") @(r.Left ? "left" : "")">
-                    <span class="pos">@r.Rank</span>
+                <li class="@(r.Token == MyToken ? "me" : "") @(r.Left ? "left" : "") top@(r.Rank)">
+                    <span class="pos">@(r.Rank switch { 1 => "🥇", 2 => "🥈", 3 => "🥉", _ => r.Rank.ToString() })</span>
                     <img src="icons/@(r.IconId).svg" alt="" />
                     <span class="nm">@r.Name</span>
                     <span class="where">@(r.Finished ? "🏁 " + RoomVmBuilder.Clock(r.FinishTime!.Value) : r.Left ? "đã rời" : r.TileName)</span>
@@ -21,35 +21,44 @@
         </ol>
         @if (Game.Ranking.Count > 5)
         {
-            <button class="btn small" @onclick="() => _all = !_all">@(_all ? "Thu gọn" : $"Xem thêm ({Game.Ranking.Count})")</button>
+            <button class="btn small wide" @onclick="() => _all = !_all">@(_all ? "Thu gọn" : $"Xem thêm ({Game.Ranking.Count} người)")</button>
         }
     </section>
 
-    <section class="box season @SeasonCatalog.Get(Game.Season).Css">
-        @{ var s = SeasonCatalog.Get(Game.Season); }
-        <h3>@s.Emoji @s.Title</h3>
+    @{ var s = SeasonCatalog.Get(Game.Season); var me = Game.Me; var total = me.Correct + me.Wrong; }
+    <section class="box season @s.Css">
+        <div class="box-head @s.Css">@s.Emoji @s.Title</div>
         @foreach (var p in s.Pros) { <div class="pro">＋ @p</div> }
         @foreach (var c in s.Cons) { <div class="con">－ @c</div> }
     </section>
 
     <section class="box me">
-        @{ var me = Game.Me; var total = me.Correct + me.Wrong; }
-        <h3>👤 Bạn · @me.TileName</h3>
-        <div class="stats">✔ @me.Correct &nbsp; ✘ @me.Wrong &nbsp; (@(total == 0 ? 0 : Math.Round(100.0 * me.Correct / total))%)</div>
-        <div class="effects">
-            <div><b>🎒 Túi (@me.Bag.Count/3):</b>
-                @if (me.Bag.Count == 0) { <span class="muted">trống</span> }
-                @foreach (var k in me.Bag) { var e = EffectCatalog.Get(k); <span class="chip buff" title="@e.Description">@e.Icon @e.Name</span> }
-            </div>
-            <div><b>✨ Hiệu ứng:</b>
-                @if (me.Pending.Count == 0 && me.NeedCorrect == 0) { <span class="muted">không có</span> }
-                @foreach (var k in me.Pending) { var e = EffectCatalog.Get(k); <span class="chip @(e.IsBuff ? "buff" : "debuff")" title="@e.Description">@e.Icon @e.Name</span> }
-                @if (me.NeedCorrect > 0) { <span class="chip debuff">🚧 Cần thêm @me.NeedCorrect câu đúng</span> }
-            </div>
+        <div class="box-head gold">👤 Bạn · @me.TileName</div>
+        <div class="stats">
+            <span class="ok">✔ @me.Correct</span>
+            <span class="bad">✘ @me.Wrong</span>
+            <span class="pct">@(total == 0 ? 0 : Math.Round(100.0 * me.Correct / total))%</span>
         </div>
-        <ul class="log">
-            @foreach (var l in me.Log.AsEnumerable().Reverse()) { <li>@l</li> }
-        </ul>
+
+        <div class="eff-title">🎒 Túi buff (@me.Bag.Count/3) <small>— bấm dùng trong câu hỏi</small></div>
+        @if (me.Bag.Count == 0) { <div class="muted small">Trống</div> }
+        @foreach (var k in me.Bag) { <EffectCard Kind="k" /> }
+
+        <div class="eff-title">✨ Hiệu ứng đang có</div>
+        @if (me.Pending.Count == 0 && me.NeedCorrect == 0) { <div class="muted small">Không có</div> }
+        @foreach (var k in me.Pending) { <EffectCard Kind="k" /> }
+        @if (me.NeedCorrect > 0)
+        {
+            <div class="effect debuff"><span class="ei">🚧</span><span><b>Ngăn sông cấm chợ</b><small>Cần trả lời đúng thêm @me.NeedCorrect câu mới được gieo</small></span></div>
+        }
+
+        @if (me.Log.Count > 0)
+        {
+            <div class="eff-title">📜 Diễn biến</div>
+            <ul class="log">
+                @foreach (var l in me.Log.AsEnumerable().Reverse()) { <li>@l</li> }
+            </ul>
+        }
     </section>
 </aside>
 

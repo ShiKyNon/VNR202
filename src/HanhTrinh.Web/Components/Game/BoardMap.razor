@@ -1,53 +1,73 @@
 @inject RoomManager Rooms
 
-<svg class="board @SeasonCss" viewBox="@ViewBox" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Bản đồ Việt Nam 65 ô">
+<svg class="board @SeasonCss" viewBox="@ViewBox" style="aspect-ratio: @F(VbW) / @F(VbH)" role="img" aria-label="Bản đồ Việt Nam 65 ô">
     <defs>
-        <radialGradient id="glow"><stop offset="0%" stop-color="#ffe066" stop-opacity="0.95" /><stop offset="100%" stop-color="#ffe066" stop-opacity="0" /></radialGradient>
+        <radialGradient id="glow"><stop offset="0%" stop-color="#ffe066" stop-opacity="1" /><stop offset="100%" stop-color="#ffe066" stop-opacity="0" /></radialGradient>
+        <linearGradient id="sea" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#cfeaff" /><stop offset="100%" stop-color="#9fd3f5" /></linearGradient>
+        <filter id="shadow" x="-30%" y="-30%" width="160%" height="160%"><feDropShadow dx="0" dy="2" stdDeviation="2" flood-opacity=".35" /></filter>
     </defs>
-    @* dải đất chữ S *@
-    <polyline class="land" points="@LandPoints" />
-    <polyline class="path" points="@PathPoints" />
-    @foreach (var (a, b) in IslandLinks)
+
+    <rect class="sea" x="@F(VbX)" y="@F(VbY)" width="@F(VbW)" height="@F(VbH)" fill="url(#sea)" />
+    <text class="sea-label" x="@F(SeaX)" y="@F(SeaY)">BIỂN ĐÔNG</text>
+    @foreach (var (x, y) in Waves) { <g><text class="deco wave" x="@F(x)" y="@F(y)">〰</text></g> }
+
+    @* dải đất theo vùng *@
+    @foreach (var z in Zones)
     {
-        <line class="sea-link" x1="@a.X" y1="@a.Y" x2="@b.X" y2="@b.Y" />
+        <polyline class="zone-land" points="@z.Points" style="stroke:@z.Color" />
     }
+    @foreach (var z in Zones)
+    {
+        <g><text class="zone-label" x="@F(z.Lx)" y="@F(z.Ly)" style="fill:@z.Ink" text-anchor="@z.Anchor">@z.Label</text></g>
+        @if (z.Deco is not null) { <g><text class="deco" x="@F(z.Dx)" y="@F(z.Dy)">@z.Deco</text></g> }
+    }
+
+    <polyline class="path" points="@PathPoints" />
+    @foreach (var (a, b) in IslandLinks) { <line class="sea-link" x1="@F(a.X)" y1="@F(a.Y)" x2="@F(b.X)" y2="@F(b.Y)" /> }
+
     @foreach (var t in Tiles)
     {
         var mark = Game?.Marks.GetValueOrDefault(t.Index) ?? TileMark.None;
         var glow = Game?.Glowing.Contains(t.Index) ?? false;
         var island = t.Tags.HasFlag(TileTags.Dao);
-        <g class="tile @(island ? "island" : "") @(mark == TileMark.Buff ? "buff" : mark == TileMark.Debuff ? "debuff" : "") @(t.Index == 1 || t.Index == 65 ? "endpoint" : "")">
-            @if (glow) { <circle class="glow" cx="@t.X" cy="@t.Y" r="46" fill="url(#glow)" /> }
+        var endpoint = t.Index == 1 || t.Index == 65;
+        var cls = island ? "island" : mark == TileMark.Buff ? "buff" : mark == TileMark.Debuff ? "debuff" : glow ? "glowing" : "";
+        <g class="tile @cls @(endpoint ? "endpoint" : "") @(t.Index == Target ? "target" : "")">
+            @if (glow) { <circle class="glow" cx="@F(t.X)" cy="@F(t.Y)" r="52" fill="url(#glow)" /> }
             @if (island)
             {
-                <circle class="islet" cx="@(t.X - 26)" cy="@(t.Y - 18)" r="5" />
-                <circle class="islet" cx="@(t.X + 24)" cy="@(t.Y + 20)" r="4" />
-                <circle class="islet" cx="@(t.X + 28)" cy="@(t.Y - 22)" r="3" />
+                <circle class="islet" cx="@F(t.X - 30)" cy="@F(t.Y - 20)" r="6" />
+                <circle class="islet" cx="@F(t.X + 28)" cy="@F(t.Y + 22)" r="5" />
+                <circle class="islet" cx="@F(t.X + 32)" cy="@F(t.Y - 24)" r="4" />
+                <circle class="islet" cx="@F(t.X - 22)" cy="@F(t.Y + 28)" r="3" />
             }
-            <circle class="dot" cx="@t.X" cy="@t.Y" r="@(island ? 24 : 20)" />
-            <text class="num" x="@t.X" y="@(t.Y + 5)">@(island ? "❓" : mark == TileMark.Buff ? "🟢" : mark == TileMark.Debuff ? "🔴" : glow ? "✨" : t.Index.ToString())</text>
-            <text class="label" x="@(t.X + (LabelLeft(t) ? -24 : 24))" y="@(t.Y + 5)" text-anchor="@(LabelLeft(t) ? "end" : "start")">@(island ? $"Quần đảo {t.Name}" : t.Short)</text>
+            <circle class="dot" cx="@F(t.X)" cy="@F(t.Y)" r="@(island || mark != TileMark.None || glow || endpoint ? 25 : 20)" />
+            <text class="num @(mark != TileMark.None || island || glow ? "emoji" : "")" x="@F(t.X)" y="@F(t.Y + (mark != TileMark.None || island || glow ? 8 : 6))">@TileGlyph(t, mark, glow, island)</text>
+            <text class="label" x="@F(t.Lx)" y="@F(t.Ly)" text-anchor="@t.Anchor">@(island ? $"QĐ {t.Name}" : t.Short)</text>
         </g>
     }
+
     @if (Game is not null)
     {
-        @foreach (var grp in Game.Pieces.Where(p => !p.Left).GroupBy(p => PieceTile(p)))
+        @foreach (var grp in Game.Pieces.Where(p => !p.Left).GroupBy(PieceTile))
         {
             var t = Tiles[grp.Key - 1];
             var list = grp.OrderBy(p => p.Token == MyToken ? 1 : 0).ToList();
             for (var i = 0; i < list.Count; i++)
             {
                 var p = list[i];
-                var (dx, dy) = Offset(i, list.Count);
                 var mine = p.Token == MyToken;
+                var (dx, dy) = mine ? (0d, -6d) : Offset(i, list.Count);
                 <g class="piece @(mine ? "mine" : "")" style="transform: translate(@(F(t.X + dx))px, @(F(t.Y + dy))px)">
-                    @if (mine) { <circle r="23" class="me-ring" /> }
-                    <image href="icons/@(p.IconId).svg" x="-18" y="-18" width="36" height="36"><title>@p.Name</title></image>
+                    <g class="hop" @key="(mine ? HopKey : 0)">
+                        <circle r="@(mine ? 27 : 21)" class="piece-bg" />
+                        <image href="icons/@(p.IconId).svg" x="@(mine ? -24 : -18)" y="@(mine ? -24 : -18)" width="@(mine ? 48 : 36)" height="@(mine ? 48 : 36)"><title>@p.Name</title></image>
+                    </g>
                 </g>
             }
         }
     }
-    <text class="map-note" x="@F(Tiles.Min(t => t.X) - 130)" y="@F(Tiles.Max(t => t.Y) + 40)">63 tỉnh thành theo địa giới hành chính trước 7/2025</text>
+    <text class="map-note" x="@F(VbX + 20)" y="@F(VbY + VbH - 20)">63 tỉnh thành theo địa giới hành chính trước 7/2025</text>
 </svg>
 
 @code {
@@ -55,20 +75,63 @@
     [Parameter] public string? MyToken { get; set; }
     /// <summary>Ô hiển thị tạm cho quân của mình trong lúc chạy hoạt ảnh.</summary>
     [Parameter] public int? MyAnimTile { get; set; }
+    /// <summary>Ô đích của lần gieo đang diễn hoạt ảnh.</summary>
+    [Parameter] public int? Target { get; set; }
+    /// <summary>Đổi giá trị để chạy lại hiệu ứng nhảy của quân mình.</summary>
+    [Parameter] public int HopKey { get; set; }
 
     private IReadOnlyList<Tile> Tiles => Rooms.Content.Tiles;
-    private string ViewBox => $"{F(Tiles.Min(t => t.X) - 150)} {F(Tiles.Min(t => t.Y) - 60)} {F(Tiles.Max(t => t.X) - Tiles.Min(t => t.X) + 330)} {F(Tiles.Max(t => t.Y) - Tiles.Min(t => t.Y) + 110)}";
     private string SeasonCss => Game is null ? "" : SeasonCatalog.Get(Game.Season).Css;
+    private static string F(double v) => v.ToString("0.#", System.Globalization.CultureInfo.InvariantCulture);
 
-    private static string F(double v) => v.ToString(System.Globalization.CultureInfo.InvariantCulture);
+    private double VbX => Tiles.Min(t => t.X) - 260;
+    private double VbY => Tiles.Min(t => t.Y) - 70;
+    private double VbW => Tiles.Max(t => t.X) + 230 - VbX;
+    private double VbH => Tiles.Max(t => t.Y) + 90 - VbY;
+    private string ViewBox => $"{F(VbX)} {F(VbY)} {F(VbW)} {F(VbH)}";
+    private double SeaX => Tiles.Max(t => t.X) - 120;
+    private double SeaY => (VbY + VbH) * 0.55;
+    private IEnumerable<(double, double)> Waves => [(SeaX - 140, SeaY + 120), (SeaX + 40, SeaY - 260), (SeaX - 60, SeaY + 380), (SeaX + 80, SeaY + 200), (SeaX - 250, SeaY - 120)];
 
-    private string LandPoints => string.Join(" ", Tiles.Where(t => !t.Tags.HasFlag(TileTags.Dao)).Select(t => $"{F(t.X)},{F(t.Y)}"));
-    private string PathPoints => LandPoints;
+    private string PathPoints => string.Join(" ", Tiles.Where(t => !t.Tags.HasFlag(TileTags.Dao)).Select(t => $"{F(t.X)},{F(t.Y)}"));
 
     private IEnumerable<(Tile, Tile)> IslandLinks => Tiles.Where(t => t.Tags.HasFlag(TileTags.Dao))
         .SelectMany(t => new[] { (Tiles[t.Index - 2], t), (t, Tiles[t.Index]) });
 
-    private static bool LabelLeft(Tile t) => t.Region == Region.Bac && t.X < 500 || t.Region == Region.Nam && t.X < 420;
+    private record ZoneVm(string Points, string Color, string Ink, string Label, double Lx, double Ly, string Anchor, string? Deco, double Dx, double Dy);
+
+    // Màu, tên, vị trí nhãn từng vùng (lệch ra phía ngoài dải đất).
+    private static readonly Dictionary<string, (string Color, string Ink, string Label, double Ox, double Oy, string Anchor, string? Deco)> ZoneStyle = new()
+    {
+        ["TayBac"] = ("#a8d5a2", "#2f6b2a", "TÂY BẮC", -150, -40, "middle", "⛰️"),
+        ["DongBac"] = ("#c6e3a1", "#4d7a1d", "ĐÔNG BẮC", 120, -110, "middle", "🌲"),
+        ["DongBangSongHong"] = ("#f5e08f", "#8a6a00", "ĐB SÔNG HỒNG", -190, 40, "end", "🌾"),
+        ["BacTrungBo"] = ("#f7c99b", "#9a4f12", "BẮC TRUNG BỘ", -110, 0, "end", "🏯"),
+        ["NamTrungBo"] = ("#9fd8d0", "#1f6e66", "NAM TRUNG BỘ", 150, 30, "start", "🏖️"),
+        ["TayNguyen"] = ("#d9b38c", "#6e4520", "TÂY NGUYÊN", -150, 0, "end", "☕"),
+        ["DongNamBo"] = ("#f4a9a0", "#8f2a1f", "ĐÔNG NAM BỘ", 170, -40, "start", "🏙️"),
+        ["TayNamBo"] = ("#b9e4a6", "#2f6d1f", "ĐB SÔNG CỬU LONG", -230, 60, "end", "🛶"),
+    };
+
+    private List<ZoneVm>? _zones;
+    private IEnumerable<ZoneVm> Zones => _zones ??= BuildZones();
+
+    private List<ZoneVm> BuildZones()
+    {
+        var res = new List<ZoneVm>();
+        foreach (var (zone, s) in ZoneStyle)
+        {
+            var ts = Tiles.Where(t => t.Zone == zone).ToList();
+            if (ts.Count == 0) continue;
+            var cx = ts.Average(t => t.X); var cy = ts.Average(t => t.Y);
+            var pts = string.Join(" ", ts.Select(t => $"{F(t.X)},{F(t.Y)}"));
+            res.Add(new ZoneVm(pts, s.Color, s.Ink, s.Label, cx + s.Ox, cy + s.Oy, s.Anchor, s.Deco, cx + s.Ox * 0.55, cy + s.Oy + 60));
+        }
+        return res;
+    }
+
+    private static string TileGlyph(Tile t, TileMark mark, bool glow, bool island) =>
+        island ? "❓" : mark == TileMark.Buff ? "🎁" : mark == TileMark.Debuff ? "⚠️" : glow ? "✨" : t.Index == 65 ? "🏁" : t.Index.ToString();
 
     private int PieceTile(PieceVm p) => p.Token == MyToken && MyAnimTile is { } a ? a : p.Tile;
 
@@ -78,7 +141,7 @@
         var ring = i < 6 ? 0 : 1 + (i - 6) / 12;
         var slots = ring == 0 ? Math.Min(n, 6) : 12;
         var k = ring == 0 ? i : (i - 6) % 12;
-        var r = ring == 0 ? 16 : 16 + ring * 14;
+        var r = ring == 0 ? 22 : 22 + ring * 18;
         var a = 2 * Math.PI * k / slots - Math.PI / 2;
         return (r * Math.Cos(a), r * Math.Sin(a));
     }

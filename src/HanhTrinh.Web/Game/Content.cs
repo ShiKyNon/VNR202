@@ -10,7 +10,8 @@ public enum TileTags { None = 0, VenBien = 1, Dao = 2, MienNuiPhiaBac = 4, BacTr
 
 public enum Season { Xuan, Ha, Thu, Dong }
 
-public record Tile(int Index, string Name, string Short, Region Region, TileTags Tags, double X, double Y);
+public record Tile(int Index, string Name, string Short, Region Region, TileTags Tags, double X, double Y,
+    string Zone = "", string Anchor = "start", double Lx = 0, double Ly = 0);
 
 public record Question(string Id, string Text, string[] Options, int Answer, string Explanation, int Page, int Chapter);
 
@@ -43,12 +44,14 @@ public sealed class ContentStore
         return new ContentStore
         {
             Tiles = raw.Select((t, i) => new Tile(i + 1, t.Name, t.Short ?? t.Name, t.Region,
-                (t.Tags ?? []).Aggregate(TileTags.None, (a, s) => a | Enum.Parse<TileTags>(s)), t.X, t.Y)).ToList(),
+                (t.Tags ?? []).Aggregate(TileTags.None, (a, s) => a | Enum.Parse<TileTags>(s)), t.X, t.Y,
+                t.Zone ?? "", t.Anchor ?? "start", t.Lx, t.Ly)).ToList(),
             Questions = Read<List<Question>>("questions.json"),
             Seasonal = Read<List<SeasonalQuestion>>("seasonal-questions.json"),
             Icons = Read<List<string>>("icons.json"),
         };
     }
 
-    private record RawTile(string Name, string? Short, Region Region, string[]? Tags, double X, double Y);
+    private record RawTile(string Name, string? Short, Region Region, string[]? Tags, double X, double Y,
+        string? Zone, string? Anchor, double Lx, double Ly);
 }

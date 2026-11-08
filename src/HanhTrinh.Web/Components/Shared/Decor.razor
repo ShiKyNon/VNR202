@@ -1,0 +1,52 @@
+@* Họa tiết trang trí: cờ Tổ quốc, cờ Đảng, mặt trống đồng. *@
+@switch (Kind)
+{
+    case "flag":
+        <svg class="flag" viewBox="0 0 30 20" width="@(Size * 1.5)" height="@Size" aria-label="Cờ đỏ sao vàng">
+            <rect width="30" height="20" fill="#da251d" />
+            <polygon fill="#ffcd00" points="@Star(15, 10, 6, 2.4, 5)" />
+        </svg>
+        break;
+    case "party":
+        <svg class="flag" viewBox="0 0 30 20" width="@(Size * 1.5)" height="@Size" aria-label="Cờ Đảng">
+            <rect width="30" height="20" fill="#da251d" />
+            <text x="15" y="15.5" text-anchor="middle" font-size="15" fill="#ffcd00" font-family="Segoe UI Symbol, DejaVu Sans, sans-serif">☭</text>
+        </svg>
+        break;
+    case "drum":
+        <svg class="drum" viewBox="-200 -200 400 400" aria-hidden="true">
+            <polygon points="@Star(0, 0, 46, 14, 14)" />
+            @foreach (var r in new[] { 58, 70, 104, 116, 150, 162, 190 }) { <circle r="@r" /> }
+            @for (var i = 0; i < 36; i++)
+            {
+                var a = i * Math.PI * 2 / 36;
+                <line x1="@F(Math.Cos(a) * 70)" y1="@F(Math.Sin(a) * 70)" x2="@F(Math.Cos(a) * 104)" y2="@F(Math.Sin(a) * 104)" />
+            }
+            @for (var i = 0; i < 48; i++)
+            {
+                var a = i * Math.PI * 2 / 48;
+                <circle class="dot" cx="@F(Math.Cos(a) * 133)" cy="@F(Math.Sin(a) * 133)" r="5" />
+            }
+            @for (var i = 0; i < 60; i++)
+            {
+                var a = i * Math.PI * 2 / 60;
+                <circle class="dot" cx="@F(Math.Cos(a) * 176)" cy="@F(Math.Sin(a) * 176)" r="3" />
+            }
+        </svg>
+        break;
+}
+
+@code {
+    [Parameter] public string Kind { get; set; } = "flag";
+    [Parameter] public double Size { get; set; } = 40;
+
+    private static string F(double v) => v.ToString("0.##", System.Globalization.CultureInfo.InvariantCulture);
+
+    private static string Star(double cx, double cy, double outer, double inner, int points) =>
+        string.Join(" ", Enumerable.Range(0, points * 2).Select(i =>
+        {
+            var r = i % 2 == 0 ? outer : inner;
+            var a = Math.PI * i / points - Math.PI / 2;
+            return $"{F(cx + r * Math.Cos(a))},{F(cy + r * Math.Sin(a))}";
+        }));
+}

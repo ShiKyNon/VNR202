@@ -1,0 +1,9 @@
+@{ var e = EffectCatalog.Get(Kind); }
+<div class="effect @(e.IsBuff ? "buff" : "debuff")">
+    <span class="ei">@e.Icon</span>
+    <span><b>@e.Name</b><small>@e.Description</small></span>
+</div>
+
+@code {
+    [Parameter, EditorRequired] public EffectKind Kind { get; set; }
+}
