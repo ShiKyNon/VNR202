@@ -1,0 +1,8 @@
+**/bin
+**/obj
+giao-trinh
+.superpowers
+.git
+tests
+content
+*.db
